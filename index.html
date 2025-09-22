@@ -7,15 +7,17 @@
   <meta name="description" content="Vox e Nex est une association festive et inclusive qui organise des karaokés, mariages, soirées et événements culturels dans le Roussillon.">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>html { scroll-behavior: smooth; }</style>
 </head>
 <body>
 
   <!-- Header -->
-  <header class="header">
+  <header class="header" id="top">
     <div class="logo">
       <img src="Logo Assos.jpeg" alt="Logo Vox e Nex Karaoke">
     </div>
-    <nav class="navbar">
+    <div class="burger" onclick="toggleMenu()">☰</div>
+    <nav class="navbar" id="navMenu">
       <ul>
         <li><a href="#presentation">Présentation</a></li>
         <li><a href="#valeurs">Pourquoi nous choisir</a></li>
@@ -30,6 +32,8 @@
         <li><a href="#galerie">Galerie</a></li>
         <li><a href="#engagement">Rejoindre l’aventure</a></li>
         <li><a href="evenements.html">Événements</a></li>
+        <li><a href="#partenaires">Partenaires</a></li>
+        <li><a href="#subventions">Subventions</a></li>
         <li><a href="#mentions">Mentions légales</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -74,6 +78,7 @@
         Siège social : 20 Rue Boileau, 66350 Toulouges<br>
         RNA : W662014616 – SIREN : 940 251 085
       </p>
+      <hr class="separator">
     </section>
 
     <!-- Pourquoi nous choisir -->
@@ -97,6 +102,7 @@
         <h3>🤝 Une ouverture à tous</h3>
         <p>Que vous soyez particulier, association, bénévole ou partenaire, Vox E Nex vous accueille et construit avec vous des événements sur mesure.</p>
       </div>
+      <hr class="separator">
     </section>
 
     <!-- Équipe -->
@@ -120,6 +126,7 @@
       </div>
 
       <p class="equipe-ouverture">Cette équipe est ouverte à la collaboration avec des <strong>bénévoles</strong>, des <strong>partenaires</strong> et des <strong>prestataires relais</strong>, dans un esprit de confiance, de clarté et de transmission.</p>
+      <hr class="separator">
     </section>
 
  <!-- Partenaires -->
@@ -132,19 +139,12 @@
     <p>Partenaire hebdomadaire pour nos soirées karaoké. Mise à disposition du lieu, coordination technique et communication partagée.</p>
   </div>
 
-  <div class="partenaire-bloc">
-    <h3>🎤 Studio Son & Lumière – Canohès</h3>
-    <p>Prestataire relais pour les mariages et soirées dansantes. Gestion de la sono, éclairage et ambiance musicale.</p>
-  </div>
-
+  
   <p class="partenaire-invite">Vous souhaitez devenir partenaire ? Proposer un lieu, un service ou une co-animation ? <a href="#contact">Contactez-nous</a> pour co-construire un événement ensemble.</p>
+  <hr class="separator">
 </section>
  
-  </main>
-</body>
-</html>
-
- <!-- Blog -->
+   <!-- Blog -->
 <section id="blog" class="section">
   <h2>Le blog Vox E Nex</h2>
   <p>🎙️ Suivez nos coulisses, nos réflexions et nos retours d’expérience sur l’organisation d’événements festifs et associatifs.</p>
@@ -154,6 +154,7 @@
     <li><strong>📌 Retour sur notre partenariat avec le Théâtre de la Complicité</strong></li>
   </ul>
   <p>📚 Chaque article est documenté, daté et pensé pour être utile à ceux qui veulent reproduire nos méthodes.</p>
+  <hr class="separator">
 </section>
 
 <!-- Newsletter -->
@@ -172,6 +173,7 @@
     <input type="hidden" name="_subject" value="Inscription à la newsletter Vox E Nex">
     <button type="submit" class="btn">📬 S’inscrire</button>
   </form>
+  <hr class="separator">
 </section>
 
 <!-- Activités -->
@@ -218,6 +220,7 @@
     <h3>🎼 Fêtes religieuses et culturelles</h3>
     <p>Participation à la Fête de la Musique, célébrations religieuses ou interconfessionnelles autour du chant et de la musique.</p>
   </div>
+  <hr class="separator">
 </section>
 
  <!-- Adhésion -->
@@ -238,23 +241,23 @@
   <p>📎 Téléchargez le bulletin d’adhésion et retournez-le lors d’un atelier ou par email :</p>
 
   <div class="adhesion-actions">
-    <a href="pdf/Bulletin_adhesion.pdf" class="btn" download>📄 Télécharger le bulletin</a>
+    <a href="Bulletin d'adhesion.pdf" class="btn" download>📄 Télécharger le bulletin</a>
     <a href="adhesion_ok.html" class="btn">✅ Confirmer mon adhésion</a>
   </div>
 
   <p class="adhesion-invite">Vous souhaitez aller plus loin ? Devenez <strong>bénévole</strong>, <strong>ambassadeur</strong> ou <strong>prestataire relais</strong>. <a href="#contact">Contactez-nous</a> pour en discuter.</p>
+  <hr class="separator">
 </section>
-
 
  <!-- Agenda -->
 <section id="agenda" class="section">
   <h2>Prochains rendez-vous</h2>
   <ul>
-    <li>📅 Jeudi 26 septembre – Karaoké au Théâtre de la Complicité (Perpignan)</li>
-    <li>🎉 Samedi 5 octobre – Soirée dansante + karaoké à Toulouges</li>
-    <li>💍 Dimanche 20 octobre – Animation mariage à Canohès</li>
+    <li>📅 Jeudi 25 septembre – Karaoké au Théâtre de la Complicité (Perpignan)</li>
+    
   </ul>
   <a href="evenements.html" class="btn">Voir tout l’agenda</a>
+  <hr class="separator">
 </section>
 
 <!-- Témoignages -->
@@ -268,6 +271,7 @@
     <p>“Organisation parfaite pour notre mariage. Christophe a tout géré avec clarté et professionnalisme.”</p>
     <footer>— Marc & Léa, mariés</footer>
   </blockquote>
+  <hr class="separator">
 </section>
 
 <!-- Galerie -->
@@ -278,6 +282,7 @@
     <img src="images/mariage.jpg" alt="Animation mariage">
     <img src="images/benevoles.jpg" alt="Équipe bénévole">
   </div>
+  <hr class="separator">
 </section>
 
 <!-- Engagement bénévole et partenariat -->
@@ -286,6 +291,7 @@
   <p>Vous êtes motivé(e), organisé(e), et aimez les ambiances festives ? Devenez <strong>bénévole</strong> et participez à nos événements de l’intérieur.</p>
   <p>Vous êtes prestataire ou structure locale ? Proposez un <strong>partenariat</strong> pour co-construire des événements mémorables.</p>
   <a href="#contact" class="btn">Je propose mon aide</a>
+  <hr class="separator">
 </section>
 
 <!-- Contact -->
@@ -320,12 +326,14 @@
   <div class="contact-infos">
     <h3>📇 Coordonnées</h3>
     <p>📍 <strong>Adresse :</strong> 20 Rue Boileau, 66350 Toulouges</p>
-    <p>📞 <strong>Téléphone :</strong> 06 16 40 00 59</p>
-    <p>📧 <strong>Email :</strong> <a href="mailto:contact@voxenex.fr">contact@voxenex.fr</a></p>
-    <p>🔗 <strong>Suivez-nous :</strong> <a href="https://www.tiktok.com/@voxnex" target="_blank">TikTok</a> | <a href="https://www.instagram.com/voxnex" target="_blank">Instagram</a></p>
+    <p>📞 <strong>Téléphone :</strong> 06 16 40 00 59 (Standard)/06 41 87 44 38(Urgence)</p>
+    <p>📧 <strong>Email :</strong> <a href="mailto:Voxenex@outlook.com">contact@voxenex.fr</a></p>
+    <p>🔗 <strong>Suivez-nous :</strong> <a href="https://www.tiktok.com/@vox.e.nex" target="_blank">TikTok</a> | <a href="https://www.instagram.com/voxenexchris/?__pwa=1" target="_blank">Instagram</a> | <a href="https://www.facebook.com/profile.php?id=61566121403760" target="_blank">Facebook</a> </p>
+    
   </div>
 
   <p class="contact-final">📣 Vox E Nex est toujours à la recherche de nouveaux talents, partenaires et idées festives. N’hésitez pas à nous contacter pour co-créer ensemble les événements de demain.</p>
+  <hr class="separator">
 </section>
 
 <!-- Paiements -->
@@ -338,7 +346,8 @@
     <li>📊 Suivi des paiements dans votre espace membre</li>
   </ul>
   <p>📎 Vous recevrez un lien de paiement personnalisé après confirmation de votre prestation ou adhésion.</p>
-  <p>📧 Pour toute question : <a href="mailto:contact@voxenex.fr">contact@voxenex.fr</a></p>
+  <p>📧 Pour toute question : <a href="mailto:voxenex@outlook.com">contact@voxenex.fr</a></p>
+  <hr class="separator">
 </section>
 
 <!DOCTYPE html>
@@ -455,6 +464,7 @@
 </main>
 
 <!-- Footer --> <footer> <p>© 2025 Vox e Nex – Tous droits réservés</p> <div class="socials"> <a href="#">Facebook</a> | <a href="#">Instagram</a> | <a href="#">TikTok</a> | <a href="#">YouTube</a> | <a href="#">Discord</a> </div> </footer> </body> </html>
+
 
 
 
