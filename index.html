@@ -33,7 +33,9 @@
         <li><a href="#engagement">Rejoindre l’aventure</a></li>
         <li><a href="evenements.html">Événements</a></li>
         <li><a href="#partenaires">Partenaires</a></li>
-        <li><a href="#subventions">Subventions</a></li>
+        <li><a href="#bilans">Bilans annuels</a></li>
+        <li><a href="#subventions">Subventions reçues</a></li>
+        <li><a href="#soutenir">Soutenir l’association</a></li>
         <li><a href="#mentions">Mentions légales</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -350,32 +352,6 @@
   <hr class="separator">
 </section>
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rapports & bilans – Vox E Nex</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-  <header class="header">
-    <div class="logo">
-      <img src="Logo Assos.jpeg" alt="Logo Vox e Nex Karaoke">
-    </div>
-    <nav class="navbar">
-      <ul>
-        <li><a href="index.html">Accueil</a></li>
-        <li><a href="#bilans">Bilans annuels</a></li>
-        <li><a href="#subventions">Subventions reçues</a></li>
-        <li><a href="#soutenir">Soutenir l’association</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main class="section">
-
     <!-- Bilans annuels -->
     <section id="bilans">
       <h2>📊 Bilans annuels</h2>
@@ -385,6 +361,7 @@
         <li><a href="pdf/Bilan_2024.pdf" download>📄 Bilan 2024</a></li>
         <li><a href="pdf/Bilan_2023.pdf" download>📄 Bilan 2023</a></li>
       </ul>
+      <hr class="separator">
     </section>
 
     <!-- Subventions -->
@@ -418,6 +395,7 @@
         </tbody>
       </table>
       <p>📎 Tous les engagements sont documentés dans les bilans annuels.</p>
+      <hr class="separator">
     </section>
 
     <!-- Soutenir -->
@@ -435,18 +413,10 @@
         <a href="formulaire_partenaire.html" class="btn">📬 Proposer un partenariat</a>
         <a href="https://www.helloasso.com/associations/vox-e-nex" class="btn" target="_blank">💳 Faire un don</a>
       </div>
+      <hr class="separator">
     </section>
 
-  </main>
-
-  <footer class="footer">
-    <p>&copy; 2025 Vox E Nex – Tous droits réservés</p>
-  </footer>
-
-</body>
-</html>
-
-<!-- Mentions légales -->
+  <!-- Mentions légales -->
 <section id="mentions" class="section">
   <h2>Mentions légales</h2>
 
@@ -461,11 +431,30 @@
   <p>Conformément au RGPD, vous pouvez demander à consulter, modifier ou supprimer vos données à tout moment en écrivant à <a href="mailto:voxenex@outlook.com">voxenex@outlook.com</a>.</p>
 </section>
 
-</main>
+  </main>
 
-<!-- Footer --> <footer> <p>© 2025 Vox e Nex – Tous droits réservés</p> <div class="socials"> <a href="#">Facebook</a> | <a href="#">Instagram</a> | <a href="#">TikTok</a> | <a href="#">YouTube</a> | <a href="#">Discord</a> </div> </footer> </body> </html>
+<!-- Pied de page -->
+  <footer class="footer">
+    <p>&copy; 2025 Vox E Nex – Tous droits réservés</p>
+    <p><a href="admin.html">🔐 Accès admin</a></p>
+  </footer>
 
+  <!-- Script bouton retour -->
+  <script>
+    function toggleMenu() {
+      document.getElementById("navMenu").classList.toggle("active");
+    }
+    document.querySelectorAll("section").forEach(section => {
+      const bouton = document.createElement("a");
+      bouton.href = "#top";
+      bouton.className = "btn-retour";
+      bouton.textContent = "⬆️ Retour au menu";
+      section.appendChild(bouton);
+    });
+  </script>
 
+</body>
+</html>
 
 
 
