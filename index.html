@@ -1,518 +1,1249 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vox e Nex – Karaoké et événements festifs</title>
-  <meta name="description" content="Vox e Nex est une association festive et inclusive qui organise des karaokés, mariages, soirées et événements culturels dans le Roussillon.">
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <style>html { scroll-behavior: smooth; }</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vox e Nex — Association</title>
+  <meta name="description" content="Vox e Nex — Association. Chaleur, joie et actions. Rejoignez-nous en tant qu'abonné, bénévole, prestataire ou partenaire." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --brand-1:#FF6B6B; /* corail chaud */
+      --brand-2:#FFD93D; /* soleil joyeux */
+      --brand-3:#6BE585; /* vert optimiste */
+      --brand-4:#7A7CFF; /* violet doux */
+      --ink:#1b1b1f;
+      --bg1:#fff6e6;
+      --bg2:#fffaf2;
+    }
+    html,body{scroll-behavior:smooth;}
+    body{font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; color:var(--ink); background: linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 100%);}
+    .container-w{max-width:1100px;}
+    .glass { background: rgba(255,255,255,0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+    .card { border-radius: 16px; background:#fff; box-shadow: 0 6px 24px rgba(0,0,0,0.06); }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:.5rem; border-radius:999px; padding:.7rem 1.1rem; font-weight:700; transition:.2s transform, .2s box-shadow, .2s background; }
+    .btn-primary { color:#1b1b1f; background: linear-gradient(90deg, var(--brand-2), #ffb86c); box-shadow: 0 8px 18px rgba(255,185,108,0.45); }
+    .btn-primary:hover, .btn-joy:hover, .btn-ghost:hover { transform: translateY(-1px); }
+    .btn-joy { color:white; background: linear-gradient(90deg, #f97373, #ff7eb3); box-shadow: 0 8px 18px rgba(249,115,115,0.45); }
+    .btn-ghost { background: rgba(255,255,255,0.8); }
+    .tag { display:inline-flex; align-items:center; gap:.4rem; padding:.35rem .7rem; border-radius:999px; font-size:.8rem; font-weight:700; }
+    .section { padding: 70px 0; }
+    @media (min-width:1024px){ .section { padding: 90px 0; } }
+    .demo-badge{ background: #1f2937; color:#fff; border-radius:999px; font-size:.75rem; padding:.25rem .6rem; }
+    img, video { max-width:100%; height:auto; border-radius:12px; }
+    .toast { position:fixed; right:18px; bottom:18px; z-index:9999; }
+    .toast-item { background:#111827; color:white; padding:.9rem 1.1rem; border-radius:14px; margin-top:.6rem; box-shadow:0 12px 30px rgba(0,0,0,0.25); }
+    /* Hero colorful backdrop (home) */
+    .hero-bg {
+      position:absolute; inset: -40px -40px auto -40px; height: 420px; z-index:-1;
+      background: radial-gradient(1200px 420px at 10% 30%, rgba(255,107,107,0.28), transparent 60%),
+                  radial-gradient(1000px 420px at 80% 20%, rgba(255,217,61,0.30), transparent 60%),
+                  radial-gradient(900px 420px at 60% 80%, rgba(123,124,255,0.28), transparent 60%),
+                  linear-gradient(120deg, #fff0d2, #f7ffe9);
+      overflow:hidden;
+    }
+    .float-blob { position:absolute; filter: blur(30px); opacity:0.55; animation: float 14s ease-in-out infinite; }
+    .float-blob:nth-child(1){ top:30px; left:5%; width:200px; height:200px; background: #ff9f9f; animation-delay:0s; border-radius:40% 60% 50% 50%;}
+    .float-blob:nth-child(2){ top:110px; right:12%; width:260px;height:260px;background:#ffe37a; animation-delay:1.2s; border-radius:55% 45% 60% 40%;}
+    .float-blob:nth-child(3){ bottom:-40px; left:40%; width:280px;height:280px;background:#9fa0ff; animation-delay:0.6s; border-radius:60% 40% 40% 60%;}
+    @keyframes float { 0%{ transform: translateY(0) translateX(0)} 50%{ transform: translateY(-18px) translateX(8px)} 100%{ transform: translateY(0) translateX(0)} }
+    /* Decorative translucent backgrounds per page */
+    .deco { position:absolute; inset:0; pointer-events:none; z-index:0; opacity:0.09; }
+    .page { display:none; position:relative; z-index:1; }
+    .page.active { display:block; }
+    /* Calendar day */
+    .day { aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; border-radius:10px; }
+    .day.event { background: rgba(255,217,61,0.25); font-weight:700; }
+    /* Inputs */
+    .field { border:1.5px solid #ece4cf; border-radius:14px; padding:.75rem 1rem; background:#fffdf7; outline:none; }
+    .field:focus { border-color:#ffd166; box-shadow:0 0 0 6px rgba(255,209,102,0.15); }
+    section { overflow:hidden; }
+  </style>
 </head>
 <body>
-
-  <!-- Header -->
-  <header class="header" id="top">
-    <div class="logo">
-      <img src="Logo Assos.jpeg" alt="Logo Vox e Nex Karaoke">
+  <!-- Header minimal -->
+  <header class="sticky top-0 z-40 backdrop-blur bg-white/75 border-b border-white/40">
+    <div class="container-w mx-auto px-5">
+      <div class="flex items-center justify-between py-3">
+        <a data-goto="home" class="flex items-center gap-3 cursor-pointer">
+          <!-- Logo placeholder -->
+          <svg width="40" height="40" viewBox="0 0 100 100" class="rounded-xl" aria-label="Logo Vox e Nex">
+            <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0" stop-color="#FF6B6B"/><stop offset="1" stop-color="#FFD93D"/></linearGradient></defs>
+            <rect x="0" y="0" width="100" height="100" rx="20" fill="url(#g)"/>
+            <text x="50" y="57" text-anchor="middle" font-size="42" fill="#151515" font-weight="800" font-family="Nunito, Poppins, Arial">V</text>
+          </svg>
+          <div class="leading-tight">
+            <div class="text-xl font-extrabold">Vox e Nex</div>
+            <div class="text-xs text-neutral-600">Association</div>
+          </div>
+        </a>
+        <div class="flex items-center gap-3">
+          <button id="openCart" class="btn btn-joy text-sm">
+            <span>Devis & Paiement</span>
+            <span id="cartCount" class="inline-flex items-center justify-center min-w-[28px] h-[28px] rounded-full bg-white text-pink-600 text-xs px-2 font-extrabold">0</span>
+          </button>
+          <a data-goto="adhesion" class="btn btn-primary text-sm cursor-pointer">Newsletter</a>
+        </div>
+      </div>
     </div>
-    <div class="banniere">
-  <img src="Copilot_20250923_150737.jpeg" alt="Bannière Vox E Nex">
-  <div class="banniere-texte">
-    <h1>🎤 Vox E Nex</h1>
-    <p>Animations festives, inclusives et catalanes</p>
-  </div>
-</div>
-    <div class="burger" onclick="toggleMenu()">☰</div>
-    <nav class="navbar" id="navMenu">
-      <ul>
-        <li><a href="#presentation">Présentation</a></li>
-        <li><a href="#valeurs">Pourquoi nous choisir</a></li>
-        <li><a href="#equipe">Équipe</a></li>
-        <li><a href="#blog">Blog</a></li>
-        <li><a href="#newsletter">Newsletter</a></li>
-        <li><a href="#paiements">Paiements</a></li>
-        <li><a href="#activites">Activités</a></li>
-        <li><a href="#agenda">Agenda</a></li>
-        <li><a href="#adhesion">Adhésion</a></li>
-        <li><a href="#temoignages">Témoignages</a></li>
-        <li><a href="#galerie">Galerie</a></li>
-        <li><a href="#engagement">Rejoindre l’aventure</a></li>
-        <li><a href="evenements.html">Événements</a></li>
-        <li><a href="#partenaires">Partenaires</a></li>
-        <li><a href="#bilans">Bilans annuels</a></li>
-        <li><a href="#subventions">Subventions reçues</a></li>
-        <li><a href="#soutenir">Soutenir l’association</a></li>
-        <li><a href="#mentions">Mentions légales</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
   </header>
 
-  <!-- Contenu principal -->
   <main>
-
-    <!-- Présentation -->
-    <section id="presentation" class="section">
-      <h1>✨ Présentation de l’association Vox E Nex (V.E.N)</h1>
-      <blockquote>
-        <p>“Bienvenue sur le site officiel de Vox E Nex, l’association qui fait vibrer vos soirées à Toulouges, Perpignan et dans tout le Roussillon catalan.”</p>
-      </blockquote>
-      <p>Fondée en 2025, Vox E Nex est née d’un double engagement : <strong>célébrer la convivialité par la musique</strong> et <strong>structurer des événements accessibles, inclusifs et reproductibles</strong>.</p>
-
-      <h3>🎤 Notre mission</h3>
-      <p>Créer des espaces de fête, de chant et de partage, ouverts à tous. Que ce soit pour un mariage, un anniversaire, une soirée associative ou un karaoké hebdomadaire, nous proposons des prestations professionnelles, documentées et adaptées à chaque public.</p>
-
-      <h3>🌍 Notre ancrage</h3>
-      <p>Implantée à Toulouges, Vox E Nex valorise la culture catalane, les lieux de vie du territoire et les dynamiques locales. Nous collaborons avec des partenaires, des bénévoles et des structures associatives pour faire rayonner la fête dans le respect des valeurs locales.</p>
-
-      <h3>🧭 Notre approche</h3>
-      <ul>
-        <li>Une grille de prestations claire et responsive</li>
-        <li>Des outils digitaux accessibles (formulaires, calendrier, paiements sécurisés)</li>
-        <li>Une documentation technique exhaustive pour garantir la reproductibilité</li>
-        <li>Des automatisations intelligentes pour fluidifier les retours, les réservations et la coordination</li>
-      </ul>
-
-      <h3>🤝 Nos publics</h3>
-      <ul>
-        <li><strong>Particuliers :</strong> événements privés (mariage, anniversaire, baptême)</li>
-        <li><strong>Associations :</strong> fêtes locales, soirées culturelles ou solidaires</li>
-        <li><strong>Bénévoles :</strong> organisation de l’intérieur, en toute transparence</li>
-        <li><strong>Partenaires :</strong> co-construction d’événements et mutualisation des ressources</li>
-      </ul>
-
-      <p><strong>📍 Coordonnées officielles</strong><br>
-        Association Vox E Nex (V.E.N)<br>
-        Siège social : 20 Rue Boileau, 66350 Toulouges<br>
-        RNA : W662014616 – SIREN : 940 251 085
-      </p>
-      
-      <hr class="separator">
-    </section>
-
-    <!-- Pourquoi nous choisir -->
-    <section id="valeurs" class="section">
-      <div class="fond-section">
-    <img src="images/agenda.jpg" alt="images">
-  </div>
-  <div class="contenu-section">
-      <h2>Pourquoi nous choisir ?</h2>
-      <p>Vox E Nex n’est pas seulement une association de karaoké : c’est une véritable communauté festive et inclusive. Chaque événement est pensé pour offrir une expérience unique, conviviale et professionnelle.</p>
-
-      <div class="valeurs-liste">
-        <h3>🎶 Une expertise reconnue</h3>
-        <p>Avec une équipe passionnée et expérimentée, nous garantissons des animations de qualité, adaptées à tous les publics et à toutes les occasions.</p>
-
-        <h3>🌟 Une ambiance conviviale</h3>
-        <p>Nos soirées sont conçues pour rassembler, créer du lien et favoriser la participation de chacun, dans un esprit de partage et de bonne humeur.</p>
-
-        <h3>📚 Une organisation transparente</h3>
-        <p>Chaque prestation est documentée et structurée, afin d’assurer une gestion claire, reproductible et accessible à tous nos partenaires et bénévoles.</p>
-
-        <h3>🌍 Un ancrage local fort</h3>
-        <p>Implantés à Toulouges et actifs dans tout le Roussillon, nous valorisons la culture catalane et collaborons avec les acteurs locaux pour dynamiser la vie associative et culturelle.</p>
-
-        <h3>🤝 Une ouverture à tous</h3>
-        <p>Que vous soyez particulier, association, bénévole ou partenaire, Vox E Nex vous accueille et construit avec vous des événements sur mesure.</p>
+    <!-- PAGE: Accueil -->
+    <section id="page-home" class="page active">
+      <div class="hero-bg">
+        <div class="float-blob"></div>
+        <div class="float-blob"></div>
+        <div class="float-blob"></div>
       </div>
-      
-      <hr class="separator">
-    </section>
+      <div class="container-w mx-auto px-5 section">
+        <div class="grid lg:grid-cols-2 gap-8 items-center relative z-10">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-2 rounded-full bg-white/80 shadow-sm border border-white/70 mb-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span>
+              <span class="text-sm font-bold">Chaleur • Joie • Action</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">
+              Vox e Nex — L’association qui rassemble et fait vibrer vos moments
+            </h1>
+            <p class="mt-4 text-lg text-neutral-700">
+              Abonnez-vous, participez, devenez bénévole ou prestataire, et co-créons des événements inoubliables: karaokés, soirées dansantes, mariages, baptêmes et anniversaires — de A à Z.
+            </p>
+            <div class="flex flex-wrap gap-3 mt-6">
+              <a data-goto="adhesion" class="btn btn-primary cursor-pointer">S’abonner / Adhérer</a>
+              <a data-goto="services" class="btn btn-joy cursor-pointer">Voir nos prestations</a>
+              <a data-goto="benevolat" class="btn btn-ghost cursor-pointer">Aider (Bénévole/Prestataire)</a>
+            </div>
+            <div class="flex items-center gap-3 mt-5">
+              <span class="demo-badge">Démo: paiements & emails simulés</span>
+              <span class="demo-badge">Blog & Galerie sauvegardés sur votre appareil</span>
+            </div>
+            <p class="mt-3 text-xs text-neutral-600">
+              Note: la musique de fond n’est pas disponible ici (limitation technique).
+            </p>
+          </div>
+          <div>
+            <div class="card p-5 lg:p-6 relative overflow-hidden">
+              <div class="absolute -top-8 -right-6 w-40 h-40 rounded-full bg-pink-300/30 blur-2xl"></div>
+              <div class="absolute -bottom-10 -left-8 w-48 h-48 rounded-full bg-yellow-300/30 blur-2xl"></div>
+              <div class="flex items-center gap-4">
+                <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl" style="background:linear-gradient(135deg,#ff9f9f,#ffd166);">🎤</div>
+                <div>
+                  <div class="text-xl font-extrabold">Votre logo ici</div>
+                  <div class="text-sm text-neutral-600">Remplacez ce bloc par votre image</div>
+                </div>
+              </div>
+              <ul class="mt-5 grid grid-cols-2 gap-3 text-sm">
+                <li class="flex items-center gap-2"><span>✨</span><span>Ambiance chaleureuse</span></li>
+                <li class="flex items-center gap-2"><span>💬</span><span>Blog communautaire</span></li>
+                <li class="flex items-center gap-2"><span>🎉</span><span>Événements tous âges</span></li>
+                <li class="flex items-center gap-2"><span>🛡️</span><span>Transparence & Mentions</span></li>
+              </ul>
+              <a data-goto="presentation" class="btn btn-joy mt-6 w-full cursor-pointer">Découvrir Vox e Nex</a>
+            </div>
+          </div>
+        </div>
 
-    <!-- Équipe -->
-    <section id="equipe" class="section">
-      <div class="fond-section">
-    <img src="images/agenda.jpg" alt="Équipe Vox E Nex">
-  </div>
-  <div class="contenu-section">
-      <h2>Notre équipe</h2>
-      <p>L’association Vox E Nex repose sur une équipe engagée, complémentaire et passionnée par l’organisation d’événements festifs et associatifs. Chaque membre joue un rôle essentiel dans la coordination, la gestion et l’animation des projets portés par l’association.</p>
-
-      <div class="equipe-membre">
-        <h3>🎤 Président : Christophe Vallois</h3>
-        <p>Fondateur de Vox E Nex, Christophe assure la direction générale, la coordination des événements et le pilotage technique. Animateur karaoké expérimenté, il est garant de la méthodologie rigoureuse et transparente de l’association.</p>
+        <!-- Menu de pages cliquables -->
+        <div class="mt-12">
+          <h2 class="text-2xl md:text-3xl font-extrabold">Accès direct aux pages</h2>
+          <div class="grid md:grid-cols-3 gap-5 mt-6">
+            <div class="card p-5 cursor-pointer hover:-translate-y-1 transition" data-goto="presentation">
+              <div class="text-4xl">📜</div>
+              <div class="font-extrabold mt-2">Présentation</div>
+              <p class="text-sm text-neutral-700 mt-1">Qui nous sommes et nos missions</p>
+            </div>
+            <div class="card p-5 cursor-pointer" data-goto="pourquoi">
+              <div class="text-4xl">🧲</div>
+              <div class="font-extrabold mt-2">Pourquoi nous</div>
+              <p class="text-sm text-neutral-700 mt-1">Chaleur, transparence, accompagnement</p>
+            </div>
+            <div class="card p-5 cursor-pointer" data-goto="equipe">
+              <div class="text-4xl">👥</div>
+              <div class="font-extrabold mt-2">Équipe</div>
+              <p class="text-sm text-neutral-700 mt-1">Des sourires et du cœur</p>
+            </div>
+            <div class="card p-5 cursor-pointer" data-goto="services">
+              <div class="text-4xl">🎤</div>
+              <div class="font-extrabold mt-2">Activités & Paiements</div>
+              <p class="text-sm text-neutral-700 mt-1">Devis + Stripe/PayPal (démo)</p>
+            </div>
+            <div class="card p-5 cursor-pointer" data-goto="agenda">
+              <div class="text-4xl">🗓️</div>
+              <div class="font-extrabold mt-2">Agenda</div>
+              <p class="text-sm text-neutral-700 mt-1">Réservez une date</p>
+            </div>
+            <div class="card p-5 cursor-pointer" data-goto="adhesion">
+              <div class="text-4xl">❤️</div>
+              <div class="font-extrabold mt-2">Adhésion & Newsletter</div>
+              <p class="text-sm text-neutral-700 mt-1">Bulletin & actus</p>
+            </div>
+            <div class="card p-5 cursor-pointer" data-goto="blog">
+              <div class="text-4xl">💬</div>
+              <div class="font-extrabold mt-2">Blog</div>
+              <p class="text-sm text-neutral-700 mt-1">Publiez et commentez</p>
+            </div>
+            <div class="card p-5 cursor-pointer" data-goto="temoignages">
+              <div class="text-4xl">🌟</div>
+              <div class="font-extrabold mt-2">Témoignages</div>
+              <p class="text-sm text-neutral-700 mt-1">Vos avis</p>
+            </div>
+            <div class="card p-5 cursor-pointer" data-goto="galerie">
+              <div class="text-4xl">📸</div>
+              <div class="font-extrabold mt-2">Galerie</div>
+              <p class="text-sm text-neutral-700 mt-1">Photos & vidéos</p>
+            </div>
+            <div class="card p-5 cursor-pointer" data-goto="benevolat">
+              <div class="text-4xl">🤝</div>
+              <div class="font-extrabold mt-2">Bénévolat/Prestataires</div>
+              <p class="text-sm text-neutral-700 mt-1">Proposez votre aide</p>
+            </div>
+            <div class="card p-5 cursor-pointer" data-goto="partenariats">
+              <div class="text-4xl">💶</div>
+              <div class="font-extrabold mt-2">Partenariats & Dons</div>
+              <p class="text-sm text-neutral-700 mt-1">Subventions, dons, bilans</p>
+            </div>
+            <div class="card p-5 cursor-pointer" data-goto="mentions">
+              <div class="text-4xl">⚖️</div>
+              <div class="font-extrabold mt-2">Mentions légales</div>
+              <p class="text-sm text-neutral-700 mt-1">RGPD, image, SACEM</p>
+            </div>
+            <div class="card p-5 cursor-pointer" data-goto="contact">
+              <div class="text-4xl">✉️</div>
+              <div class="font-extrabold mt-2">Contact</div>
+              <p class="text-sm text-neutral-700 mt-1">Coordonnées & message</p>
+            </div>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="equipe-membre">
-        <h3>🗂️ Vice-Présidente & Secrétaire : Martine Roby</h3>
-        <p>Martine veille au bon fonctionnement administratif, à la rédaction des comptes-rendus et à la fluidité des échanges entre les membres. Sa présence bienveillante et structurante est un pilier de la vie associative.</p>
+    <!-- PAGE: Présentation -->
+    <section id="page-presentation" class="page">
+      <div class="deco">
+        <svg class="w-full h-full" viewBox="0 0 800 400" preserveAspectRatio="none">
+          <g fill="#FF6B6B"><circle cx="80" cy="80" r="50"/><circle cx="720" cy="120" r="60"/><circle cx="400" cy="360" r="40"/></g>
+        </svg>
       </div>
-
-      <div class="equipe-membre">
-        <h3>💰 Trésorier : Christophe Vallois</h3>
-        <p>En plus de son rôle de président, Christophe assure la gestion financière, la transparence des comptes et le suivi des cotisations et paiements. Il garantit la sécurité des transactions et la clarté budgétaire.</p>
+      <div class="container-w mx-auto px-5 section relative z-10">
+        <a data-goto="home" class="btn btn-ghost">⟵ Retour à l’accueil</a>
+        <div class="grid lg:grid-cols-2 gap-8 items-center mt-6">
+          <div>
+            <h2 class="text-3xl md:text-4xl font-extrabold">Qui sommes-nous ?</h2>
+            <p class="mt-4 text-neutral-700 leading-relaxed">
+              Vox e Nex est une association dédiée à la convivialité et à la création de souvenirs joyeux. Nous organisons et animons des événements participatifs (karaokés, soirées, mariages, baptêmes, anniversaires), tout en favorisant l’entraide locale via un réseau de bénévoles et de prestataires passionnés.
+            </p>
+            <div class="mt-5 flex flex-wrap gap-2">
+              <span class="tag bg-amber-100 text-amber-800">👨‍👩‍👧‍👦 Intergénérationnel</span>
+              <span class="tag bg-green-100 text-green-800">💚 Bienveillance</span>
+              <span class="tag bg-indigo-100 text-indigo-800">🎶 Culture & Fête</span>
+              <span class="tag bg-pink-100 text-pink-800">🤝 Lien social</span>
+            </div>
+          </div>
+          <div class="card p-6">
+            <h3 class="text-xl font-extrabold">Nos missions</h3>
+            <ul class="mt-3 space-y-2 text-neutral-700">
+              <li>• Rassembler autour d’événements joyeux et inclusifs</li>
+              <li>• Mettre en avant les talents locaux (prestataires, artistes)</li>
+              <li>• Faciliter l’engagement bénévole et l’entraide</li>
+              <li>• Assurer une gestion transparente des financements</li>
+            </ul>
+            <div class="grid md:grid-cols-2 gap-3 mt-5">
+              <div class="glass rounded-2xl p-4">
+                <div class="text-3xl">🎤</div>
+                <div class="font-bold mt-1">Karaoké & Soirées</div>
+                <div class="text-sm text-neutral-600">Ambiance garantie</div>
+              </div>
+              <div class="glass rounded-2xl p-4">
+                <div class="text-3xl">💍</div>
+                <div class="font-bold mt-1">Mariages & Célébrations</div>
+                <div class="text-sm text-neutral-600">De A à Z</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <p class="equipe-ouverture">Cette équipe est ouverte à la collaboration avec des <strong>bénévoles</strong>, des <strong>partenaires</strong> et des <strong>prestataires relais</strong>, dans un esprit de confiance, de clarté et de transmission.</p>
-      
-      <hr class="separator">
     </section>
 
- <!-- Partenaires -->
-<section id="partenaires" class="section">
-  <h2>Nos partenaires</h2>
-  <p>🤝 Vox E Nex construit ses événements avec des partenaires locaux, culturels et techniques qui partagent nos valeurs de convivialité, de rigueur et d’inclusivité.</p>
-
-  <div class="partenaire-bloc">
-    <h3>🎭 Théâtre de la Complicité – Perpignan</h3>
-    <p>Partenaire hebdomadaire pour nos soirées karaoké. Mise à disposition du lieu, coordination technique et communication partagée.</p>
-  </div>
-
-  
-  <p class="partenaire-invite">Vous souhaitez devenir partenaire ? Proposer un lieu, un service ou une co-animation ? <a href="#contact">Contactez-nous</a> pour co-construire un événement ensemble.</p>
-  
-  <hr class="separator">
-</section>
- 
-   <!-- Blog -->
-<section id="blog" class="section">
-  <h2>Le blog Vox E Nex</h2>
-  <p>🎙️ Suivez nos coulisses, nos réflexions et nos retours d’expérience sur l’organisation d’événements festifs et associatifs.</p>
-  <ul>
-    <li><strong>📌 10 conseils pour réussir une soirée karaoké inclusive</strong></li>
-    <li><strong>📌 Comment structurer un événement associatif avec des bénévoles</strong></li>
-    <li><strong>📌 Retour sur notre partenariat avec le Théâtre de la Complicité</strong></li>
-  </ul>
-  <p>📚 Chaque article est documenté, daté et pensé pour être utile à ceux qui veulent reproduire nos méthodes.</p>
-  
-  <hr class="separator">
-</section>
-
-<!-- Newsletter -->
-<section id="newsletter" class="section">
-  <h2>Recevoir nos actualités</h2>
-  <p>📩 Abonnez-vous à notre newsletter mensuelle pour recevoir :</p>
-  <ul>
-    <li>🗓️ Les prochains événements</li>
-    <li>🎥 Les vidéos virales du mois</li>
-    <li>🛠️ Les outils et méthodes partagés</li>
-    <li>🤝 Les appels à bénévoles et partenariats</li>
-  </ul>
-  <form action="https://formspree.io/f/mdkwnnna" method="POST" class="contact-form">
-    <label for="email-news">Votre email :</label>
-    <input type="email" id="email-news" name="_replyto" required>
-    <input type="hidden" name="_subject" value="Inscription à la newsletter Vox E Nex">
-    <button type="submit" class="btn">📬 S’inscrire</button>
-  </form>
-  
-  <hr class="separator">
-</section>
-
-<!-- Activités -->
-<section id="activites" class="section">
-  <h2>Nos activités</h2>
-  <p>Vox E Nex propose une gamme complète de prestations festives autour du chant, de la musique et de la convivialité. Chaque activité est pensée pour être accessible, documentée et adaptée à vos besoins.</p>
-
-  <div class="activite-bloc">
-    <h3>🎤 Ateliers karaoké</h3>
-    <p>Sessions hebdomadaires pour apprendre à chanter, découvrir sa voix et s’amuser en groupe. Ouverts à tous les niveaux, dans une ambiance bienveillante et festive.</p>
-  </div>
-
-  <div class="activite-bloc">
-    <h3>🎶 Soirées karaoké hebdomadaires</h3>
-    <p>Tous les jeudis à 20h au Théâtre de la Complicité à Perpignan. Micro ouvert, blind tests, quiz musicaux et ambiance conviviale garantie.</p>
-  </div>
-
-  <div class="activite-bloc">
-    <h3>💃 Karaoké + soirée dansante</h3>
-    <p>Animation karaoké suivie d’une soirée dansante avec playlist personnalisée, éclairage, sono et ambiance festive.</p>
-  </div>
-
-  <div class="activite-bloc">
-    <h3>💍 Organisation de mariage</h3>
-    <p>Coordination complète : DJ, traiteur, décoration, planning, animation musicale et accompagnement personnalisé.</p>
-  </div>
-
-  <div class="activite-bloc">
-    <h3>🎂 Anniversaires & baptêmes</h3>
-    <p>Animations adaptées à l’âge et au lieu, jeux, musique, buffet, décoration et gestion technique.</p>
-  </div>
-
-  <div class="activite-bloc">
-    <h3>🤝 Événements associatifs</h3>
-    <p>Animation, coordination des bénévoles, documentation et valorisation des dynamiques locales.</p>
-  </div>
-
-  <div class="activite-bloc">
-    <h3>🏛️ Prestations institutionnelles</h3>
-    <p>Animations musicales pour mairies, communautés de communes, départements, fêtes locales et intergénérationnelles.</p>
-  </div>
-
-  <div class="activite-bloc">
-    <h3>🎼 Fêtes religieuses et culturelles</h3>
-    <p>Participation à la Fête de la Musique, célébrations religieuses ou interconfessionnelles autour du chant et de la musique.</p>
-  </div>
-  
-  <hr class="separator">
-</section>
-
- <!-- Adhésion -->
-<section id="adhesion" class="section">
-  <h2>Adhésion</h2>
-  <p>🎉 Rejoindre Vox E Nex, c’est faire partie d’une aventure humaine, festive et locale. Que vous soyez passionné de chant, amateur de soirées conviviales ou curieux de découvrir l’envers du décor, votre place est ici.</p>
-
-  <h3>👉 Cotisation annuelle : <strong>20 €</strong></h3>
-  <ul>
-    <li>🎤 Accès libre aux ateliers karaoké hebdomadaires</li>
-    <li>🎟️ Réductions sur les soirées spéciales et événements partenaires</li>
-    <li>🗳️ Participation aux décisions de l’association</li>
-    <li>🤝 Accès à l’espace bénévole et aux outils internes</li>
-    <li>🎁 Invitation aux événements réservés aux membres</li>
-  </ul>
-
-  <p>📝 L’adhésion est simple, rapide et vous permet de contribuer à une dynamique festive, inclusive et reproductible.</p>
-  <p>📎 Téléchargez le bulletin d’adhésion et retournez-le lors d’un atelier ou par email :</p>
-
-  <div class="adhesion-actions">
-    <a href="Bulletin d'adhesion.pdf" class="btn" download>📄 Télécharger le bulletin</a>
-    <a href="adhesion_ok.html" class="btn">✅ Confirmer mon adhésion</a>
-  </div>
-
-  <p class="adhesion-invite">Vous souhaitez aller plus loin ? Devenez <strong>bénévole</strong>, <strong>ambassadeur</strong> ou <strong>prestataire relais</strong>. <a href="#contact">Contactez-nous</a> pour en discuter.</p>
-  
-  <hr class="separator">
-</section>
-
- <!-- Agenda -->
-  <section id="agenda" class="section">
-   <h2>Prochains rendez-vous</h2>
-  
-   <ul>
-     <li>📅 Jeudi 25 septembre – Karaoké au Théâtre de la Complicité (Perpignan)</li>
-   </ul>
-   <a href="evenements.html" class="btn">Voir tout l’agenda</a>
-  
-   <hr class="separator">
- </section>
-
- <!-- Témoignages -->
-  <section id="temoignages" class="section">
-  <h2>Ils ont vécu l’expérience Vox E Nex</h2>
-  
-  <blockquote>
-    <p>“Une soirée karaoké inoubliable, bien organisée et pleine de bonne humeur. Bravo à l’équipe !”</p>
-    <footer>— Julie, participante</footer>
-  </blockquote>
-  <blockquote>
-    <p>“Organisation parfaite pour notre mariage. Christophe a tout géré avec clarté et professionnalisme.”</p>
-    <footer>— Marc & Léa, mariés</footer>
-  </blockquote>
-    
-  <hr class="separator">
-</section>
-
-<!-- Galerie -->
-<section id="galerie" class="section">
-  <h2>En images</h2>
-  
-  <div class="gallery">
-    <img src="images/soiree1.jpg" alt="Soirée karaoké">
-    <img src="images/mariage.jpg" alt="Animation mariage">
-    <img src="images/benevoles.jpg" alt="Équipe bénévole">
-  </div>
-  
-  <hr class="separator">
-</section>
-
-<!-- Engagement bénévole et partenariat -->
-<section id="engagement" class="section">
-  <h2>Rejoignez l’aventure Vox E Nex</h2>
-  
-  <p>Vous êtes motivé(e), organisé(e), et aimez les ambiances festives ? Devenez <strong>bénévole</strong> et participez à nos événements de l’intérieur.</p>
-  <p>Vous êtes prestataire ou structure locale ? Proposez un <strong>partenariat</strong> pour co-construire des événements mémorables.</p>
-  <a href="#contact" class="btn">Je propose mon aide</a>
-  <hr class="separator">
-</section>
-
-<!-- Contact -->
-<section id="contact" class="section">
-  <h2>Contact</h2>
-
-  <p>📬 Une question, une demande de prestation, une envie de rejoindre l’équipe ou simplement un mot sympa ? N’hésitez pas à nous écrire via ce formulaire. Nous répondons dans les 48h maximum.</p>
-
-  <form action="https://formspree.io/f/mdkwnnna" method="POST" class="contact-form">
-    <label for="name">Nom :</label>
-    <input type="text" id="name" name="name" required>
-
-    <label for="email">Email :</label>
-    <input type="email" id="email" name="_replyto" required>
-
-    <label for="type">Type de demande :</label>
-    <select id="type" name="type">
-      <option value="karaoke">Prestation karaoké</option>
-      <option value="evenement">Organisation d’événement</option>
-      <option value="benevolat">Devenir bénévole</option>
-      <option value="partenariat">Proposer un partenariat</option>
-      <option value="autre">Autre</option>
-    </select>
-
-    <label for="message">Message :</label>
-    <textarea id="message" name="message" rows="5" required></textarea>
-
-    <input type="hidden" name="_redirect" value="https://tonsite.vercel.app/merci.html">
-    <button type="submit" class="btn">📨 Envoyer ma demande</button>
-  </form>
-
-  <div class="contact-infos">
-    <h3>📇 Coordonnées</h3>
-    <p>📍 <strong>Adresse :</strong> 20 Rue Boileau, 66350 Toulouges</p>
-    <p>📞 <strong>Téléphone :</strong> 06 16 40 00 59 (Standard)/06 41 87 44 38(Urgence)</p>
-    <p>📧 <strong>Email :</strong> <a href="mailto:Voxenex@outlook.com">contact@voxenex.fr</a></p>
-    <p>🔗 <strong>Suivez-nous :</strong> <a href="https://www.tiktok.com/@vox.e.nex" target="_blank">TikTok</a> | <a href="https://www.instagram.com/voxenexchris/?__pwa=1" target="_blank">Instagram</a> | <a href="https://www.facebook.com/profile.php?id=61566121403760" target="_blank">Facebook</a> </p>
-    
-  </div>
-
-  <p class="contact-final">📣 Vox E Nex est toujours à la recherche de nouveaux talents, partenaires et idées festives. N’hésitez pas à nous contacter pour co-créer ensemble les événements de demain.</p>
-  <hr class="separator">
-</section>
-
-<!-- Paiements -->
-<section id="paiements" class="section">
-  <h2>Paiements sécurisés</h2>
-  
-  <p>💳 Vox E Nex utilise la plateforme <strong>Stripe</strong> pour garantir des paiements simples, rapides et sécurisés.</p>
-  <ul>
-    <li>🔐 Paiement par carte bancaire via lien sécurisé</li>
-    <li>📄 Facture générée automatiquement après validation</li>
-    <li>📊 Suivi des paiements dans votre espace membre</li>
-  </ul>
-  <p>📎 Vous recevrez un lien de paiement personnalisé après confirmation de votre prestation ou adhésion.</p>
-  <p>📧 Pour toute question : <a href="mailto:voxenex@outlook.com">contact@voxenex.fr</a></p>
-  <hr class="separator">
-</section>
-
-  <!-- Bilans annuels -->
-    <section id="bilans" class="section">
-      <h2>📊 Bilans annuels</h2>
-      
-      <p>Chaque année, Vox E Nex publie un bilan transparent de ses activités, de ses finances et de ses engagements.</p>
-      <ul>
-        <li><a href="pdf/Bilan_2025.pdf" download>📄 Bilan 2025</a></li>
-        <li><a href="pdf/Bilan_2024.pdf" download>📄 Bilan 2024</a></li>
-        <li><a href="pdf/Bilan_2023.pdf" download>📄 Bilan 2023</a></li>
-      </ul>
-      <hr class="separator">
-    </section>
-
-    <!-- Subventions -->
-    <section id="subventions" class="section">
-      <h2>💶 Subventions reçues</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Année</th>
-            <th>Origine</th>
-            <th>Montant</th>
-            <th>Usage</th>
-            <th>Engagements</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>2025</td>
-            <td>Mairie de Toulouges</td>
-            <td>1 500 €</td>
-            <td>Ateliers karaoké intergénérationnels</td>
-            <td>Rapport d’impact + visibilité locale</td>
-          </tr>
-          <tr>
-            <td>2024</td>
-            <td>Département des Pyrénées-Orientales</td>
-            <td>2 000 €</td>
-            <td>Matériel sono et éclairage</td>
-            <td>Bilans + co-animation d’événements</td>
-          </tr>
-        </tbody>
-      </table>
-      <p>📎 Tous les engagements sont documentés dans les bilans annuels.</p>
-      <hr class="separator">
-    </section>
-
-    <!-- Soutenir -->
-    <section id="soutenir" class="section">
-      <h2>🤝 Soutenir l’association</h2>
-      
-      <p>Vous êtes une collectivité, une entreprise ou un particulier ? Vous pouvez soutenir Vox E Nex par :</p>
-      <ul>
-        <li>💳 Un don ponctuel ou régulier via <a href="https://www.helloasso.com/associations/vox-e-nex" target="_blank">HelloAsso</a> ou Stripe</li>
-        <li>📄 Une subvention ou un mécénat (voir dossier ci-dessous)</li>
-        <li>📬 Une proposition de partenariat via notre formulaire dédié</li>
-      </ul>
-
-      <div class="soutien-actions">
-        <a href="pdf/Dossier_subvention_VoxENex.pdf" class="btn" download>📄 Télécharger le dossier de demande de subvention</a>
-        <a href="formulaire_partenaire.html" class="btn">📬 Proposer un partenariat</a>
-        <a href="https://www.helloasso.com/associations/vox-e-nex" class="btn" target="_blank">💳 Faire un don</a>
+    <!-- PAGE: Pourquoi nous -->
+    <section id="page-pourquoi" class="page">
+      <div class="deco">
+        <svg class="w-full h-full" viewBox="0 0 800 400" preserveAspectRatio="none">
+          <g fill="#7A7CFF"><rect x="50" y="260" width="120" height="60" rx="18"/><rect x="650" y="40" width="100" height="60" rx="18"/><rect x="340" y="100" width="140" height="60" rx="18"/></g>
+        </svg>
       </div>
-      <hr class="separator">
+      <div class="container-w mx-auto px-5 section relative z-10">
+        <a data-goto="home" class="btn btn-ghost">⟵ Retour à l’accueil</a>
+        <h2 class="text-3xl md:text-4xl font-extrabold mt-6">Pourquoi nous choisir ?</h2>
+        <div class="grid md:grid-cols-3 gap-5 mt-6">
+          <div class="card p-6"><div class="text-4xl">🌞</div><div class="font-extrabold mt-2">Chaleur & Joie</div><p class="text-neutral-700 mt-2">Une ambiance humaine et chaleureuse au cœur de tout.</p></div>
+          <div class="card p-6"><div class="text-4xl">🧭</div><div class="font-extrabold mt-2">A à Z</div><p class="text-neutral-700 mt-2">Organisation complète, vous profitez, on s’occupe du reste.</p></div>
+          <div class="card p-6"><div class="text-4xl">🔎</div><div class="font-extrabold mt-2">Transparence</div><p class="text-neutral-700 mt-2">Budgets, subventions et bilans publiés clairement.</p></div>
+        </div>
+      </div>
     </section>
 
-  <!-- Mentions légales -->
-<section id="mentions" class="section">
-  <h2>Mentions légales</h2>
+    <!-- PAGE: Équipe -->
+    <section id="page-equipe" class="page">
+      <div class="deco">
+        <svg class="w-full h-full" viewBox="0 0 800 400" preserveAspectRatio="none">
+          <g fill="#6BE585"><path d="M80 320c40-40 80-40 120 0 40 40 80 40 120 0" stroke="#6BE585" stroke-width="6" fill="none"/><circle cx="500" cy="200" r="28"/><circle cx="560" cy="240" r="18"/><circle cx="620" cy="180" r="22"/></g>
+        </svg>
+      </div>
+      <div class="container-w mx-auto px-5 section relative z-10">
+        <a data-goto="home" class="btn btn-ghost">⟵ Retour à l’accueil</a>
+        <div class="mt-6">
+          <h2 class="text-3xl md:text-4xl font-extrabold">L’équipe</h2>
+          <p class="mt-2 text-neutral-700">Une équipe souriante, engagée et à l’écoute.</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-5 mt-6">
+          <div class="card p-5"><div class="w-full h-36 rounded-xl flex items-center justify-center text-5xl bg-gradient-to-tr from-pink-200 to-yellow-200">🙂</div><div class="mt-3 font-extrabold text-lg">Alexis</div><div class="text-sm text-neutral-600">Président & Animateur</div></div>
+          <div class="card p-5"><div class="w-full h-36 rounded-xl flex items-center justify-center text-5xl bg-gradient-to-tr from-green-200 to-indigo-200">😊</div><div class="mt-3 font-extrabold text-lg">Nora</div><div class="text-sm text-neutral-600">Coordination Événements</div></div>
+          <div class="card p-5"><div class="w-full h-36 rounded-xl flex items-center justify-center text-5xl bg-gradient-to-tr from-yellow-200 to-pink-200">😎</div><div class="mt-3 font-extrabold text-lg">Sam</div><div class="text-sm text-neutral-600">Relations Prestataires</div></div>
+        </div>
+      </div>
+    </section>
 
-  <p><strong>Dénomination :</strong> Association Vox e Nex (V.E.N)</p>
-  <p><strong>Responsable de publication :</strong> Christophe Vallois</p>
-  <p><strong>Siège social :</strong> 20 Rue Boileau, 66350 Toulouges</p>
-  <p><strong>SIREN :</strong> 940 251 085 – <strong>RNA :</strong> W662014616</p>
-  <p><strong>Hébergeur :</strong> OVH – 2 rue Kellermann, 59100 Roubaix</p>
+    <!-- PAGE: Services & Paiements -->
+    <section id="page-services" class="page">
+      <div class="deco">
+        <svg class="w-full h-full" viewBox="0 0 800 400" preserveAspectRatio="none">
+          <g fill="#FF6B6B"><path d="M150 140c40-20 70-10 110 20s100 20 140-30" stroke="#FF6B6B" stroke-width="8" fill="none" /><text x="40" y="100" font-size="60" fill="#FF6B6B" font-weight="800">🎤 🎈 💃</text></g>
+        </svg>
+      </div>
+      <div class="container-w mx-auto px-5 section relative z-10">
+        <div class="flex items-start justify-between gap-6 flex-wrap">
+          <a data-goto="home" class="btn btn-ghost">⟵ Accueil</a>
+          <div class="text-right">
+            <h2 class="text-3xl md:text-4xl font-extrabold">Activités & Paiements</h2>
+            <p class="mt-2 text-neutral-700">Ajoutez au devis et réglez via Stripe/PayPal (démo, sans paiement réel).</p>
+            <span class="demo-badge mt-2 inline-block">Démo</span>
+          </div>
+        </div>
+        <div id="servicesGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-6"></div>
+      </div>
+    </section>
 
-  <h3>🔐 Protection des données</h3>
-  <p>Les données collectées via ce site sont utilisées uniquement par l’association Vox e Nex dans le cadre de ses activités. Elles ne sont ni revendues ni partagées.</p>
-  <p>Conformément au RGPD, vous pouvez demander à consulter, modifier ou supprimer vos données à tout moment en écrivant à <a href="mailto:voxenex@outlook.com">voxenex@outlook.com</a>.</p>
-</section>
+    <!-- PAGE: Agenda -->
+    <section id="page-agenda" class="page">
+      <div class="deco">
+        <svg class="w-full h-full" viewBox="0 0 800 400">
+          <g fill="#FFD93D"><rect x="80" y="90" width="120" height="80" rx="12"/><rect x="240" y="120" width="140" height="80" rx="12"/><rect x="580" y="220" width="120" height="80" rx="12"/></g>
+        </svg>
+      </div>
+      <div class="container-w mx-auto px-5 section relative z-10">
+        <a data-goto="home" class="btn btn-ghost">⟵ Accueil</a>
+        <h2 class="text-3xl md:text-4xl font-extrabold mt-6">Agenda & Réservations</h2>
+        <p class="mt-2 text-neutral-700">Réservez une date et visualisez les événements à venir.</p>
+        <div class="grid lg:grid-cols-2 gap-6 mt-6">
+          <div class="card p-5">
+            <h3 class="font-extrabold text-xl">Réserver une date</h3>
+            <form id="bookingForm" class="grid gap-3 mt-3">
+              <div class="grid md:grid-cols-2 gap-3">
+                <div><label class="text-sm font-bold">Date</label><input type="date" id="bookingDate" class="field w-full" required /></div>
+                <div><label class="text-sm font-bold">Type d’événement</label><select id="bookingType" class="field w-full">
+                  <option value="Karaoké simple">Karaoké simple</option>
+                  <option value="Karaoké + Soirée">Karaoké + Soirée dansante</option>
+                  <option value="Mariage">Organisation Mariage</option>
+                  <option value="Baptême">Organisation Baptême</option>
+                  <option value="Anniversaire">Organisation Anniversaire</option>
+                </select></div>
+              </div>
+              <div><label class="text-sm font-bold">Lieu (optionnel)</label><input type="text" id="bookingPlace" class="field w-full" placeholder="Ville / Salle" /></div>
+              <div><label class="text-sm font-bold">Notes</label><textarea id="bookingNotes" class="field w-full" rows="3" placeholder="Détails…"></textarea></div>
+              <button class="btn btn-joy w-full">Réserver (démo)</button>
+              <p class="text-xs text-neutral-600">Réservation simulée et enregistrée localement.</p>
+            </form>
+          </div>
+          <div class="card p-5">
+            <div class="flex items-center justify-between">
+              <h3 class="font-extrabold text-xl">Calendrier du mois</h3>
+              <div class="flex gap-2">
+                <button id="prevMonth" class="btn btn-ghost">◀</button>
+                <button id="nextMonth" class="btn btn-ghost">▶</button>
+              </div>
+            </div>
+            <div id="calendarHead" class="mt-2 font-bold"></div>
+            <div class="grid grid-cols-7 gap-2 text-center text-xs mt-2 text-neutral-600">
+              <div>Lun</div><div>Mar</div><div>Mer</div><div>Jeu</div><div>Ven</div><div>Sam</div><div>Dim</div>
+            </div>
+            <div id="calendarGrid" class="grid grid-cols-7 gap-2 mt-2"></div>
+            <div class="mt-4">
+              <h4 class="font-extrabold">À venir</h4>
+              <ul id="upcomingList" class="mt-2 space-y-2 text-sm"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
+    <!-- PAGE: Adhésion & Newsletter -->
+    <section id="page-adhesion" class="page">
+      <div class="deco">
+        <svg class="w-full h-full" viewBox="0 0 800 400">
+          <g fill="#7A7CFF"><path d="M120 180c30-40 70-40 100 0 30 40 70 40 100 0" stroke="#7A7CFF" stroke-width="6" fill="none"/><text x="520" y="120" font-size="64" font-weight="800" fill="#7A7CFF">❤️</text></g>
+        </svg>
+      </div>
+      <div class="container-w mx-auto px-5 section relative z-10">
+        <a data-goto="home" class="btn btn-ghost">⟵ Accueil</a>
+        <div class="flex items-start justify-between gap-6 flex-wrap mt-6">
+          <div>
+            <h2 class="text-3xl md:text-4xl font-extrabold">Adhérer à l’association</h2>
+            <p class="mt-2 text-neutral-700">Réception d’une confirmation (démo) et ajout à la communauté.</p>
+            <span class="demo-badge mt-2 inline-block">Démo</span>
+          </div>
+        </div>
+        <div class="grid lg:grid-cols-2 gap-6 mt-6">
+          <form id="memberForm" class="card p-5">
+            <h3 class="font-extrabold text-xl">Bulletin d’adhésion</h3>
+            <div class="grid md:grid-cols-2 gap-3 mt-3">
+              <div><label class="text-sm font-bold">Nom</label><input class="field w-full" id="mName" required></div>
+              <div><label class="text-sm font-bold">Email</label><input type="email" class="field w-full" id="mEmail" required></div>
+            </div>
+            <div class="mt-3"><label class="text-sm font-bold">Rôle souhaité</label>
+              <select class="field w-full" id="mRole"><option value="Abonné">Abonné</option><option value="Bénévole">Bénévole</option><option value="Prestataire">Prestataire</option></select>
+            </div>
+            <div class="mt-3"><label class="text-sm font-bold">Message (optionnel)</label><textarea class="field w-full" id="mMsg" rows="3" placeholder="Motivations, disponibilités…"></textarea></div>
+            <button class="btn btn-joy w-full mt-3">Envoyer le bulletin (démo)</button>
+            <p class="text-xs text-neutral-600 mt-2">Un e-mail de confirmation simulé sera “envoyé”.</p>
+          </form>
+          <div class="card p-5">
+            <h3 class="font-extrabold text-xl">Newsletter</h3>
+            <p class="text-neutral-700">Abonnez-vous pour recevoir nos actualités.</p>
+            <form id="newsletterForm" class="mt-3 flex gap-2">
+              <input type="email" id="nlEmail" class="field flex-1" placeholder="Votre email" required>
+              <button class="btn btn-primary">S’abonner</button>
+            </form>
+            <h4 class="font-bold mt-6">Derniers abonnés</h4>
+            <ul id="nlList" class="mt-2 text-sm space-y-1"></ul>
+            <a id="newsletter" class="hidden" aria-hidden="true"></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE: Blog -->
+    <section id="page-blog" class="page">
+      <div class="deco">
+        <svg class="w-full h-full" viewBox="0 0 800 400">
+          <g fill="#6BE585"><text x="60" y="120" font-size="60">💬 📸 📝</text><circle cx="720" cy="300" r="42"/></g>
+        </svg>
+      </div>
+      <div class="container-w mx-auto px-5 section relative z-10">
+        <a data-goto="home" class="btn btn-ghost">⟵ Accueil</a>
+        <div class="flex items-start justify-between gap-6 flex-wrap mt-6">
+          <div><h2 class="text-3xl md:text-4xl font-extrabold">Blog & Espace d’échanges</h2><p class="mt-2 text-neutral-700">Publiez des messages, photos, et commentez. Sauvegarde locale.</p></div>
+        </div>
+        <div class="grid lg:grid-cols-2 gap-6 mt-6">
+          <form id="postForm" class="card p-5">
+            <h3 class="font-extrabold text-xl">Nouveau post</h3>
+            <div class="mt-3"><label class="text-sm font-bold">Titre</label><input id="postTitle" class="field w-full" required></div>
+            <div class="mt-3"><label class="text-sm font-bold">Contenu</label><textarea id="postContent" class="field w-full" rows="4" required></textarea></div>
+            <div class="mt-3"><label class="text-sm font-bold">Photo/Vidéo (optionnel, ≤ 2 Mo)</label><input id="postMedia" type="file" accept="image/*,video/mp4" class="field w-full"></div>
+            <button class="btn btn-joy w-full mt-3">Publier</button>
+          </form>
+          <div class="card p-5">
+            <h3 class="font-extrabold text-xl">Publications</h3>
+            <div id="postsList" class="mt-3 space-y-4"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE: Témoignages -->
+    <section id="page-temoignages" class="page">
+      <div class="deco">
+        <svg class="w-full h-full" viewBox="0 0 800 400">
+          <g fill="#FF6B6B"><text x="60" y="100" font-size="60">💍 👶 🎂</text><path d="M500 330c30-30 70-30 100 0" stroke="#FF6B6B" stroke-width="6" fill="none"/></g>
+        </svg>
+      </div>
+      <div class="container-w mx-auto px-5 section relative z-10">
+        <a data-goto="home" class="btn btn-ghost">⟵ Accueil</a>
+        <div class="grid lg:grid-cols-2 gap-6 mt-6">
+          <form id="testiForm" class="card p-5">
+            <h3 class="font-extrabold text-xl">Partager un avis</h3>
+            <div class="grid md:grid-cols-2 gap-3 mt-3">
+              <div><label class="text-sm font-bold">Nom</label><input id="tName" class="field w-full" required></div>
+              <div><label class="text-sm font-bold">Événement</label><select id="tType" class="field w-full"><option>Mariage</option><option>Baptême</option><option>Anniversaire</option><option>Soirée</option></select></div>
+            </div>
+            <div class="mt-3"><label class="text-sm font-bold">Note</label><select id="tRate" class="field w-full"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></div>
+            <div class="mt-3"><label class="text-sm font-bold">Message</label><textarea id="tMsg" class="field w-full" rows="3" required></textarea></div>
+            <button class="btn btn-primary w-full mt-3">Envoyer</button>
+          </form>
+          <div class="card p-5">
+            <h3 class="font-extrabold text-xl">Avis récents</h3>
+            <div id="testiList" class="mt-3 grid sm:grid-cols-2 gap-4"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE: Galerie -->
+    <section id="page-galerie" class="page">
+      <div class="deco">
+        <svg class="w-full h-full" viewBox="0 0 800 400">
+          <g fill="#FFD93D"><text x="60" y="90" font-size="60">📸 🎥 🌈</text><circle cx="740" cy="280" r="34"/></g>
+        </svg>
+      </div>
+      <div class="container-w mx-auto px-5 section relative z-10">
+        <a data-goto="home" class="btn btn-ghost">⟵ Accueil</a>
+        <div class="grid lg:grid-cols-2 gap-6 mt-6">
+          <form id="galForm" class="card p-5">
+            <h3 class="font-extrabold text-xl">Ajouter un média</h3>
+            <div class="mt-3"><label class="text-sm font-bold">Titre (optionnel)</label><input id="galTitle" class="field w-full" placeholder="Ex: Ouverture de bal"></div>
+            <div class="mt-3"><label class="text-sm font-bold">Image/Vidéo (≤ 8 Mo)</label><input id="galFile" type="file" class="field w-full" accept="image/*,video/mp4" required></div>
+            <button class="btn btn-joy w-full mt-3">Ajouter</button>
+          </form>
+          <div class="card p-5">
+            <h3 class="font-extrabold text-xl">Vos médias</h3>
+            <div id="galGrid" class="mt-3 grid md:grid-cols-2 gap-4"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE: Bénévolat & Prestataires -->
+    <section id="page-benevolat" class="page">
+      <div class="deco">
+        <svg class="w-full h-full" viewBox="0 0 800 400">
+          <g fill="#6BE585"><text x="60" y="110" font-size="60">🤝 🧰 ⏰</text><rect x="640" y="260" width="80" height="60" rx="12"/></g>
+        </svg>
+      </div>
+      <div class="container-w mx-auto px-5 section relative z-10">
+        <a data-goto="home" class="btn btn-ghost">⟵ Accueil</a>
+        <div class="grid lg:grid-cols-2 gap-6 mt-6">
+          <form id="helpForm" class="card p-5">
+            <h3 class="font-extrabold text-xl">Je propose mon aide</h3>
+            <div class="grid md:grid-cols-2 gap-3 mt-3">
+              <div><label class="text-sm font-bold">Nom</label><input id="hName" class="field w-full" required></div>
+              <div><label class="text-sm font-bold">Email</label><input id="hEmail" type="email" class="field w-full" required></div>
+            </div>
+            <div class="mt-3"><label class="text-sm font-bold">Je suis</label><select id="hType" class="field w-full"><option>Bénévole</option><option>Prestataire</option></select></div>
+            <div class="mt-3"><label class="text-sm font-bold">Compétences</label><input id="hSkills" class="field w-full" placeholder="Ex: Sono, DJ, Photo, Service…"></div>
+            <div class="mt-3"><label class="text-sm font-bold">Disponibilités</label><input id="hAvail" class="field w-full" placeholder="Ex: soirs & week-ends"></div>
+            <button class="btn btn-primary w-full mt-3">Envoyer</button>
+          </form>
+          <div class="card p-5">
+            <h3 class="font-extrabold text-xl">Candidatures</h3>
+            <div id="helpList" class="mt-3 space-y-3 text-sm"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE: Partenariats & Financements -->
+    <section id="page-partenariats" class="page">
+      <div class="deco">
+        <svg class="w-full h-full" viewBox="0 0 800 400">
+          <g fill="#7A7CFF"><text x="60" y="110" font-size="60">🤝 💶 📝</text><circle cx="720" cy="280" r="30"/></g>
+        </svg>
+      </div>
+      <div class="container-w mx-auto px-5 section relative z-10">
+        <a data-goto="home" class="btn btn-ghost">⟵ Accueil</a>
+        <div class="grid lg:grid-cols-3 gap-6 mt-6">
+          <form id="fundForm" class="card p-5">
+            <h3 class="font-extrabold text-xl">Ajouter une entrée</h3>
+            <div class="mt-3"><label class="text-sm font-bold">Type</label><select id="fType" class="field w-full"><option>Subvention</option><option>Don</option></select></div>
+            <div class="mt-3"><label class="text-sm font-bold">Intitulé / Source</label><input id="fName" class="field w-full" placeholder="Ville, Région, Entreprise…" required></div>
+            <div class="grid md:grid-cols-2 gap-3 mt-3">
+              <div><label class="text-sm font-bold">Montant (€)</label><input id="fAmount" type="number" class="field w-full" min="0" step="1" required></div>
+              <div><label class="text-sm font-bold">Statut</label><select id="fStatus" class="field w-full"><option>Demandée</option><option>Acceptée</option><option>Reçue</option></select></div>
+            </div>
+            <button class="btn btn-joy w-full mt-3">Ajouter</button>
+          </form>
+          <div class="card p-5">
+            <h3 class="font-extrabold text-xl">Subventions</h3>
+            <div id="subvList" class="mt-3 space-y-2 text-sm"></div>
+            <h3 class="font-extrabold text-xl mt-6">Dons</h3>
+            <div id="donList" class="mt-3 space-y-2 text-sm"></div>
+          </div>
+          <div class="card p-5">
+            <h3 class="font-extrabold text-xl">Transparence</h3>
+            <ul id="financeSummary" class="mt-3 space-y-1 text-sm"></ul>
+            <div class="mt-5">
+              <h4 class="font-bold">Bilans annuels</h4>
+              <form id="bilanForm" class="mt-2 grid md:grid-cols-2 gap-2">
+                <input id="bilanYear" type="number" class="field w-full" placeholder="Année" required>
+                <input id="bilanFile" type="file" class="field w-full" accept="application/pdf" required>
+                <button class="btn btn-primary md:col-span-2">Publier (PDF)</button>
+              </form>
+              <ul id="bilanList" class="mt-3 text-sm space-y-1"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE: Mentions légales -->
+    <section id="page-mentions" class="page">
+      <div class="deco">
+        <svg class="w-full h-full" viewBox="0 0 800 400"><g fill="#FF6B6B"><text x="60" y="110" font-size="60">⚖️ 🔐 🎼</text></g></svg>
+      </div>
+      <div class="container-w mx-auto px-5 section relative z-10">
+        <a data-goto="home" class="btn btn-ghost">⟵ Accueil</a>
+        <div class="grid lg:grid-cols-3 gap-6 mt-6">
+          <div class="card p-5">
+            <h3 class="font-extrabold text-xl">Mentions légales</h3>
+            <p class="text-sm text-neutral-700 mt-2">
+              Association Vox e Nex — (SIREN/SIRET si applicable). Siège: (adresse).
+              Directeur de publication: (nom). Hébergeur: (à compléter lors de la publication).
+            </p>
+          </div>
+          <div class="card p-5">
+            <h3 class="font-extrabold text-xl">Protection des données</h3>
+            <p class="text-sm text-neutral-700 mt-2">
+              Vos données sont utilisées uniquement pour la gestion associative (adhésions, newsletter, événements).
+              Vous pouvez demander l’accès, la rectification ou la suppression via la page Contact.
+            </p>
+          </div>
+          <div class="card p-5">
+            <h3 class="font-extrabold text-xl">Droits à l’image & SACEM</h3>
+            <p class="text-sm text-neutral-700 mt-2">
+              Lors d’événements, des photos/vidéos peuvent être prises. Informez-nous si vous ne souhaitez pas apparaître.
+              Pour la diffusion musicale, nous respectons les règles SACEM (déclarations et redevances si nécessaires).
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE: Contact -->
+    <section id="page-contact" class="page">
+      <div class="deco">
+        <svg class="w-full h-full" viewBox="0 0 800 400"><g fill="#6BE585"><text x="60" y="110" font-size="60">📞 ✉️ 📍</text></g></svg>
+      </div>
+      <div class="container-w mx-auto px-5 section relative z-10">
+        <a data-goto="home" class="btn btn-ghost">⟵ Accueil</a>
+        <div class="grid lg:grid-cols-2 gap-6 mt-6">
+          <div class="card p-5">
+            <h3 class="font-extrabold text-xl">Coordonnées</h3>
+            <ul class="mt-3 text-sm space-y-1">
+              <li>📍 Adresse: à compléter</li>
+              <li>☎️ Téléphone: à compléter</li>
+              <li>✉️ Email: contact@voixenex.org (à adapter)</li>
+            </ul>
+            <div class="mt-4">
+              <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" class="tag bg-blue-100 text-blue-800">Facebook</a>
+              <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="tag bg-pink-100 text-pink-800">Instagram</a>
+            </div>
+          </div>
+          <form id="contactForm" class="card p-5">
+            <h3 class="font-extrabold text-xl">Écrivez-nous</h3>
+            <div class="grid md:grid-cols-2 gap-3 mt-3">
+              <div><label class="text-sm font-bold">Nom</label><input id="cName" class="field w-full" required></div>
+              <div><label class="text-sm font-bold">Email</label><input id="cEmail" type="email" class="field w-full" required></div>
+            </div>
+            <div class="mt-3"><label class="text-sm font-bold">Sujet</label><input id="cSubject" class="field w-full" required></div>
+            <div class="mt-3"><label class="text-sm font-bold">Message</label><textarea id="cMsg" class="field w-full" rows="4" required></textarea></div>
+            <div class="grid grid-cols-2 gap-2 mt-3">
+              <button class="btn btn-joy">Envoyer (démo)</button>
+              <button id="openMail" type="button" class="btn btn-ghost">Ouvrir dans mon mail</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
   </main>
 
-<!-- Pied de page -->
-  <footer class="footer">
-    <p>&copy; 2025 Vox E Nex – Tous droits réservés</p>
-    <p><a href="admin.html">🔐 Accès admin</a></p>
-  </footer>
+  <!-- Panier / Devis & Paiement (Drawer) -->
+  <div id="cartDrawer" class="fixed top-0 right-0 bottom-0 w-full sm:w-[420px] bg-white shadow-2xl translate-x-full transition-transform z-50 flex flex-col">
+    <div class="p-4 border-b flex items-center justify-between">
+      <div class="font-extrabold text-lg">Devis & Paiement (Démo)</div>
+      <button id="closeCart" class="btn btn-ghost">✕</button>
+    </div>
+    <div id="cartItems" class="p-4 flex-1 overflow-y-auto"></div>
+    <div class="p-4 border-t">
+      <div class="flex items-center justify-between font-extrabold">
+        <span>Total</span><span id="cartTotal">0 €</span>
+      </div>
+      <div class="grid grid-cols-2 gap-2 mt-3">
+        <button id="payStripe" class="btn btn-primary">Payer Stripe (démo)</button>
+        <button id="payPayPal" class="btn btn-joy">Payer PayPal (démo)</button>
+      </div>
+      <p class="text-xs text-neutral-600 mt-2">
+        Paiement simulé. Aucun débit réel. Les liens s’ouvrent dans un nouvel onglet.
+      </p>
+    </div>
+  </div>
 
-  <!-- Script bouton retour -->
+  <!-- Toasts -->
+  <div id="toast" class="toast"></div>
+
   <script>
-    function toggleMenu() {
-      document.getElementById("navMenu").classList.toggle("active");
+    // SPA Router (pages distinctes via hash)
+    const PAGES = ['home','presentation','pourquoi','equipe','services','agenda','adhesion','blog','temoignages','galerie','benevolat','partenariats','mentions','contact'];
+    function showPage(name){
+      PAGES.forEach(k=>{
+        const s = document.getElementById('page-'+k);
+        if(s) s.classList.toggle('active', k===name);
+      });
+      document.title = (name==='home'?'Vox e Nex — Association':'Vox e Nex — '+name.charAt(0).toUpperCase()+name.slice(1));
+      // scroll to top
+      window.scrollTo({top:0, behavior:'instant'});
     }
-    document.querySelectorAll("section").forEach(section => {
-      const bouton = document.createElement("a");
-      bouton.href = "#top";
-      bouton.className = "btn-retour";
-      bouton.textContent = "⬆️ Retour au menu";
-      section.appendChild(bouton);
+    function navigateTo(name){ location.hash = name; }
+    function handleRoute(){
+      const name = (location.hash || '#home').replace('#','');
+      showPage(PAGES.includes(name)? name : 'home');
+    }
+    window.addEventListener('hashchange', handleRoute);
+    document.addEventListener('click', (e)=>{
+      const t = e.target.closest('[data-goto]');
+      if(t){ e.preventDefault(); navigateTo(t.getAttribute('data-goto')); }
     });
+
+    // Data store (localStorage powered)
+    const store = {
+      key: "vox_en_ex_site_v2",
+      state: {
+        services: [
+          {id:"karaoke_simple", name:"Karaoké simple", price:150, icon:"🎤", details:"Système son + micros + playlist sur mesure. Jusqu’à 3h."},
+          {id:"karaoke_plus", name:"Karaoké + soirée dansante", price:300, icon:"🎶", details:"Karaoké + DJ set dansant. Lumières incluses. Jusqu’à 5h."},
+          {id:"org_mariage", name:"Organisation mariage A→Z", price:1200, icon:"💍", details:"Coordination, prestataires, planning, décoration, musique, accompagnement complet."},
+          {id:"org_bapteme", name:"Organisation baptême A→Z", price:600, icon:"👶", details:"Cérémonie & fête, traiteur, déco, animations douces, souvenirs."},
+          {id:"org_anniv", name:"Organisation anniversaire A→Z", price:700, icon:"🎂", details:"Thème, animation, musique, gâteau, surprises et gestion des invités."}
+        ],
+        cart: [],
+        bookings: [],
+        posts: [],
+        comments: {},
+        testimonials: [],
+        gallery: [],
+        volunteers: [],
+        providers: [],
+        newsletter: [],
+        members: [],
+        finances: { subventions: [], dons: [] },
+        bilans: []
+      },
+      load(){
+        try{
+          const raw = localStorage.getItem(this.key);
+          if(raw){ this.state = Object.assign(this.state, JSON.parse(raw)); }
+        }catch(e){ console.warn("load error", e); }
+      },
+      save(){
+        try{ localStorage.setItem(this.key, JSON.stringify(this.state)); }catch(e){ console.warn("save error", e); }
+      }
+    };
+    store.load();
+
+    // Utils
+    const el = (sel, parent=document)=>parent.querySelector(sel);
+    const els = (sel, parent=document)=>[...parent.querySelectorAll(sel)];
+    const fmtEUR = n => new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR'}).format(n);
+    const toastBox = el('#toast');
+    function notify(msg){
+      const item = document.createElement('div');
+      item.className = 'toast-item';
+      item.textContent = msg;
+      toastBox.appendChild(item);
+      setTimeout(()=>{ item.style.opacity= '0.0'; item.style.transform='translateY(8px)'; }, 2200);
+      setTimeout(()=> item.remove(), 2600);
+    }
+    function readFileAsDataURL(file, limitBytes){
+      return new Promise((res, rej)=>{
+        if(limitBytes && file.size > limitBytes) return rej(new Error('Taille trop grande'));
+        const fr = new FileReader();
+        fr.onload = () => res(fr.result);
+        fr.onerror = () => rej(new Error('Lecture impossible'));
+        fr.readAsDataURL(file);
+      });
+    }
+
+    // CART
+    function renderServices(){
+      const grid = el('#servicesGrid');
+      if(!grid) return;
+      grid.innerHTML = '';
+      store.state.services.forEach(s=>{
+        const card = document.createElement('div');
+        card.className = 'card p-5 flex flex-col';
+        card.innerHTML = `
+          <div class="flex items-start justify-between gap-3">
+            <div class="text-4xl">${s.icon}</div>
+            <span class="tag bg-amber-100 text-amber-800">${fmtEUR(s.price)}+</span>
+          </div>
+          <div class="font-extrabold text-lg mt-2">${s.name}</div>
+          <p class="text-sm text-neutral-700 mt-1">${s.details}</p>
+          <div class="mt-4 grid grid-cols-2 gap-2">
+            <button class="btn btn-primary addCart">Ajouter</button>
+            <button class="btn btn-ghost showDetails">Détails</button>
+          </div>
+        `;
+        el('.addCart', card).addEventListener('click', ()=>{
+          const item = {...s, uid: s.id + '_' + Date.now()};
+          store.state.cart.push(item);
+          store.save();
+          refreshCartIcon();
+          notify(`${s.name} ajouté au devis`);
+        });
+        el('.showDetails', card).addEventListener('click', ()=> notify(s.name + ' — ' + s.details));
+        grid.appendChild(card);
+      });
+    }
+    function refreshCartIcon(){
+      el('#cartCount').textContent = store.state.cart.length;
+      renderCart();
+    }
+    function openCart(){ el('#cartDrawer').style.transform = 'translateX(0%)'; }
+    function closeCart(){ el('#cartDrawer').style.transform = 'translateX(100%)'; }
+    el('#openCart').addEventListener('click', openCart);
+    el('#closeCart').addEventListener('click', closeCart);
+    function renderCart(){
+      const wrap = el('#cartItems');
+      if(!wrap) return;
+      wrap.innerHTML = '';
+      let total = 0;
+      if(store.state.cart.length === 0){
+        wrap.innerHTML = `<div class="text-sm text-neutral-600">Votre devis est vide. Ajoutez des prestations.</div>`;
+      } else {
+        store.state.cart.forEach((it, idx)=>{
+          total += it.price;
+          const row = document.createElement('div');
+          row.className = 'flex items-center justify-between py-3 border-b';
+          row.innerHTML = `
+            <div class="flex items-center gap-3">
+              <div class="text-2xl">${it.icon}</div>
+              <div>
+                <div class="font-bold">${it.name}</div>
+                <div class="text-xs text-neutral-600">${fmtEUR(it.price)} minimum</div>
+              </div>
+            </div>
+            <button class="btn btn-ghost text-sm">Supprimer</button>
+          `;
+          el('.btn', row).addEventListener('click', ()=>{
+            store.state.cart.splice(idx,1);
+            store.save(); refreshCartIcon(); notify('Supprimé du devis');
+          });
+          wrap.appendChild(row);
+        });
+      }
+      el('#cartTotal').textContent = fmtEUR(total);
+    }
+    el('#payStripe').addEventListener('click', ()=>{
+      notify('Démo: redirection Stripe simulée');
+      window.open('https://stripe.com', '_blank');
+    });
+    el('#payPayPal').addEventListener('click', ()=>{
+      notify('Démo: redirection PayPal simulée');
+      window.open('https://www.paypal.com', '_blank');
+    });
+
+    // AGENDA
+    let calRef = new Date();
+    function startOfMonth(d){ return new Date(d.getFullYear(), d.getMonth(), 1); }
+    function daysInMonth(d){ return new Date(d.getFullYear(), d.getMonth()+1, 0).getDate(); }
+    function weekdayFR(d){ let wd = d.getDay(); return wd === 0 ? 6 : wd-1; }
+    function renderCalendar(){
+      const head = el('#calendarHead');
+      const grid = el('#calendarGrid');
+      if(!head || !grid) return;
+      const month = calRef.toLocaleString('fr-FR', {month:'long', year:'numeric'});
+      head.textContent = month.charAt(0).toUpperCase() + month.slice(1);
+      grid.innerHTML = '';
+      const first = startOfMonth(calRef);
+      const days = daysInMonth(calRef);
+      const pad = weekdayFR(first);
+      for(let i=0;i<pad;i++){ const empty = document.createElement('div'); empty.className='day'; grid.appendChild(empty); }
+      const monthNum = calRef.getMonth();
+      const yearNum = calRef.getFullYear();
+      const eventsInMonth = store.state.bookings.filter(b=>{
+        const d = new Date(b.date);
+        return d.getMonth()===monthNum && d.getFullYear()===yearNum;
+      }).map(b=> (new Date(b.date)).getDate());
+      for(let d=1; d<=days; d++){
+        const cell = document.createElement('div');
+        cell.className = 'day card';
+        cell.textContent = d;
+        if(eventsInMonth.includes(d)) cell.classList.add('event');
+        grid.appendChild(cell);
+      }
+      renderUpcoming();
+    }
+    function renderUpcoming(){
+      const ul = el('#upcomingList'); if(!ul) return; ul.innerHTML = '';
+      const upcoming = [...store.state.bookings].sort((a,b)=> new Date(a.date)-new Date(b.date)).slice(0,6);
+      if(upcoming.length===0){ ul.innerHTML = `<li class="text-neutral-600">Aucun événement à venir.</li>`; return; }
+      upcoming.forEach(b=>{
+        const li = document.createElement('li');
+        li.className = 'card p-3';
+        const d = new Date(b.date).toLocaleDateString('fr-FR');
+        li.innerHTML = `<div class="font-bold">${b.type} — ${d}</div><div class="text-xs text-neutral-600">${b.place?('Lieu: '+b.place+' • '):''}${b.notes||''}</div>`;
+        ul.appendChild(li);
+      });
+    }
+    const bookingForm = el('#bookingForm');
+    if(bookingForm){
+      bookingForm.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        const date = el('#bookingDate').value;
+        const type = el('#bookingType').value;
+        if(!date){ notify('Choisissez une date'); return; }
+        const clash = store.state.bookings.find(b=> b.date === date);
+        if(clash){ notify('Date déjà réservée, choisissez une autre.'); return; }
+        const place = el('#bookingPlace').value.trim();
+        const notes = el('#bookingNotes').value.trim();
+        store.state.bookings.push({ id:'bk_'+Date.now(), date, type, place, notes });
+        store.save();
+        notify('Réservation enregistrée (démo)');
+        e.target.reset();
+        renderCalendar();
+      });
+    }
+    const prevMonthBtn = el('#prevMonth'); if(prevMonthBtn){ prevMonthBtn.addEventListener('click', ()=>{ calRef = new Date(calRef.getFullYear(), calRef.getMonth()-1, 1); renderCalendar(); }); }
+    const nextMonthBtn = el('#nextMonth'); if(nextMonthBtn){ nextMonthBtn.addEventListener('click', ()=>{ calRef = new Date(calRef.getFullYear(), calRef.getMonth()+1, 1); renderCalendar(); }); }
+
+    // ADHÉSION & NEWSLETTER
+    const memberForm = el('#memberForm');
+    if(memberForm){
+      memberForm.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        const name = el('#mName').value.trim();
+        const email = el('#mEmail').value.trim();
+        const role = el('#mRole').value;
+        const msg = el('#mMsg').value.trim();
+        store.state.members.push({ id:'m_'+Date.now(), name, email, role, msg });
+        store.save();
+        notify('Merci ! Confirmation envoyée (démo)');
+        e.target.reset();
+      });
+    }
+    const newsletterForm = el('#newsletterForm');
+    if(newsletterForm){
+      newsletterForm.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        const email = el('#nlEmail').value.trim();
+        if(!email){ return; }
+        if(store.state.newsletter.includes(email)){ notify('Vous êtes déjà abonné'); return; }
+        store.state.newsletter.unshift(email);
+        store.state.newsletter = store.state.newsletter.slice(0,6);
+        store.save();
+        renderNewsletter();
+        notify('Abonné à la newsletter !');
+        e.target.reset();
+      });
+    }
+    function renderNewsletter(){
+      const ul = el('#nlList'); if(!ul) return; ul.innerHTML = '';
+      store.state.newsletter.forEach(n=>{
+        const li = document.createElement('li');
+        li.textContent = '• '+n;
+        ul.appendChild(li);
+      });
+    }
+
+    // BLOG
+    function renderPosts(){
+      const wrap = el('#postsList'); if(!wrap) return; wrap.innerHTML = '';
+      const posts = [...store.state.posts].sort((a,b)=> b.id - a.id);
+      if(posts.length===0){ wrap.innerHTML = `<div class="text-sm text-neutral-600">Soyez le premier à publier !</div>`; return; }
+      posts.forEach(p=>{
+        const box = document.createElement('div');
+        box.className = 'card p-4';
+        const date = new Date(p.id).toLocaleString('fr-FR');
+        let mediaHTML = '';
+        if(p.media){
+          if(p.media.type.startsWith('image/')) mediaHTML = `<img src="${p.media.data}" alt="Image du post">`;
+          else if(p.media.type.startsWith('video/')) mediaHTML = `<video controls src="${p.media.data}"></video>`;
+        }
+        const comments = store.state.comments[p.id] || [];
+        box.innerHTML = `
+          <div class="flex items-center justify-between">
+            <div class="font-extrabold">${p.title}</div>
+            <div class="text-xs text-neutral-500">${date}</div>
+          </div>
+          <p class="mt-2 text-sm text-neutral-800">${p.content}</p>
+          <div class="mt-3">${mediaHTML}</div>
+          <div class="mt-3">
+            <div class="text-sm font-bold">Commentaires (${comments.length})</div>
+            <div class="mt-2 space-y-2">${comments.map(c=>`
+              <div class="glass rounded-xl p-2">
+                <div class="text-xs text-neutral-600">${new Date(c.id).toLocaleString('fr-FR')}</div>
+                <div class="text-sm">${c.text}</div>
+              </div>`).join('')}</div>
+            <form data-post="${p.id}" class="mt-2 flex gap-2">
+              <input class="field flex-1" placeholder="Votre commentaire" required>
+              <button class="btn btn-ghost">Envoyer</button>
+            </form>
+          </div>
+        `;
+        const form = box.querySelector('form');
+        form.addEventListener('submit', (e)=>{
+          e.preventDefault();
+          const pid = +form.getAttribute('data-post');
+          const text = form.querySelector('input').value.trim();
+          if(!text) return;
+          const arr = store.state.comments[pid] || [];
+          arr.push({ id: Date.now(), text });
+          store.state.comments[pid] = arr;
+          store.save();
+          notify('Commentaire publié');
+          renderPosts();
+        });
+        wrap.appendChild(box);
+      });
+    }
+    const postForm = el('#postForm');
+    if(postForm){
+      postForm.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        const title = el('#postTitle').value.trim();
+        const content = el('#postContent').value.trim();
+        const file = el('#postMedia').files[0];
+        let media = null;
+        try{
+          if(file){
+            const data = await readFileAsDataURL(file, 2*1024*1024);
+            media = { type: file.type, data };
+          }
+          store.state.posts.push({ id: Date.now(), title, content, media });
+          store.save();
+          notify('Publication créée !');
+          e.target.reset();
+          renderPosts();
+        }catch(err){
+          notify('Fichier trop grand (≤ 2 Mo)');
+        }
+      });
+    }
+
+    // TÉMOIGNAGES
+    function renderTestimonials(){
+      const grid = el('#testiList'); if(!grid) return; grid.innerHTML = '';
+      const list = [...store.state.testimonials].sort((a,b)=> b.id-a.id).slice(0,8);
+      if(list.length===0){ grid.innerHTML = `<div class="text-sm text-neutral-600">Pas encore d’avis.</div>`; return; }
+      list.forEach(t=>{
+        const card = document.createElement('div');
+        card.className = 'glass p-4 rounded-2xl';
+        card.innerHTML = `
+          <div class="font-bold">${t.name} • ${t.type}</div>
+          <div class="text-yellow-500 mt-1">${'★'.repeat(t.rate)}${'☆'.repeat(5-t.rate)}</div>
+          <p class="text-sm mt-2">${t.msg}</p>
+        `;
+        grid.appendChild(card);
+      });
+    }
+    const testiForm = el('#testiForm');
+    if(testiForm){
+      testiForm.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        const name = el('#tName').value.trim();
+        const type = el('#tType').value;
+        const rate = +el('#tRate').value;
+        const msg = el('#tMsg').value.trim();
+        store.state.testimonials.push({ id: Date.now(), name, type, rate, msg });
+        store.save();
+        notify('Merci pour votre avis !');
+        e.target.reset();
+        renderTestimonials();
+      });
+    }
+
+    // GALERIE
+    function renderGallery(){
+      const grid = el('#galGrid'); if(!grid) return; grid.innerHTML = '';
+      const items = [...store.state.gallery].sort((a,b)=> b.id-a.id);
+      if(items.length===0){ grid.innerHTML = `<div class="text-sm text-neutral-600">Ajoutez vos souvenirs ici.</div>`; return; }
+      items.forEach(g=>{
+        const box = document.createElement('div');
+        box.className = 'card p-3';
+        box.innerHTML = `
+          <div class="text-xs text-neutral-500">${new Date(g.id).toLocaleString('fr-FR')}</div>
+          <div class="font-bold mt-1">${g.title || ''}</div>
+          <div class="mt-2">${g.type.startsWith('image/')?`<img src="${g.data}" alt="Média">`:`<video controls src="${g.data}"></video>`}</div>
+          <button class="btn btn-ghost w-full mt-3">Supprimer</button>
+        `;
+        el('.btn', box).addEventListener('click', ()=>{
+          store.state.gallery = store.state.gallery.filter(x=>x.id!==g.id);
+          store.save();
+          renderGallery();
+          notify('Média supprimé');
+        });
+        grid.appendChild(box);
+      });
+    }
+    const galForm = el('#galForm');
+    if(galForm){
+      galForm.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        const title = el('#galTitle').value.trim();
+        const file = el('#galFile').files[0];
+        if(!file) return;
+        try{
+          const data = await readFileAsDataURL(file, 8*1024*1024);
+          store.state.gallery.push({ id: Date.now(), title, type:file.type, data });
+          store.save();
+          notify('Média ajouté !');
+          e.target.reset();
+          renderGallery();
+        }catch(err){
+          notify('Fichier trop grand (≤ 8 Mo)');
+        }
+      });
+    }
+
+    // BÉNÉVOLAT & PRESTATAIRES
+    function renderHelps(){
+      const wrap = el('#helpList'); if(!wrap) return; wrap.innerHTML = '';
+      const vols = store.state.volunteers;
+      const pros = store.state.providers;
+      if(vols.length+pros.length === 0){
+        wrap.innerHTML = `<div class="text-neutral-600">Aucune candidature pour le moment.</div>`;
+        return;
+      }
+      function itemLine(h){
+        const div = document.createElement('div');
+        div.className = 'glass p-3 rounded-xl';
+        div.innerHTML = `<div class="font-bold">${h.name} • ${h.type}</div>
+                         <div class="text-xs text-neutral-600">${h.email}</div>
+                         <div class="text-sm mt-1">${h.skills || ''}</div>
+                         <div class="text-xs mt-1">${h.avail || ''}</div>`;
+        return div;
+      }
+      if(vols.length){
+        const h3 = document.createElement('div');
+        h3.className = 'font-bold mt-2'; h3.textContent='Bénévoles';
+        wrap.appendChild(h3);
+        vols.forEach(v=>wrap.appendChild(itemLine(v)));
+      }
+      if(pros.length){
+        const h3 = document.createElement('div');
+        h3.className = 'font-bold mt-2'; h3.textContent='Prestataires';
+        wrap.appendChild(h3);
+        pros.forEach(p=>wrap.appendChild(itemLine(p)));
+      }
+    }
+    const helpForm = el('#helpForm');
+    if(helpForm){
+      helpForm.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        const name = el('#hName').value.trim();
+        const email = el('#hEmail').value.trim();
+        const type = el('#hType').value;
+        const skills = el('#hSkills').value.trim();
+        const avail = el('#hAvail').value.trim();
+        const entry = { id: Date.now(), name, email, type, skills, avail };
+        if(type==='Bénévole') store.state.volunteers.push(entry);
+        else store.state.providers.push(entry);
+        store.save();
+        notify('Candidature enregistrée (démo)');
+        e.target.reset();
+        renderHelps();
+      });
+    }
+
+    // PARTENARIATS / FINANCEMENTS
+    const fundForm = el('#fundForm');
+    if(fundForm){
+      fundForm.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        const type = el('#fType').value;
+        const name = el('#fName').value.trim();
+        const amount = Math.max(0, +el('#fAmount').value);
+        const status = el('#fStatus').value;
+        const item = { id: Date.now(), name, amount, status };
+        if(type==='Subvention') store.state.finances.subventions.push(item);
+        else store.state.finances.dons.push(item);
+        store.save();
+        notify('Entrée ajoutée');
+        e.target.reset();
+        renderFinances();
+      });
+    }
+    function renderFinances(){
+      const subv = store.state.finances.subventions;
+      const dons = store.state.finances.dons;
+      const subvList = el('#subvList'); const donList = el('#donList'); const summary = el('#financeSummary');
+      if(subvList){ subvList.innerHTML = ''; subv.forEach(x=>{ const d = document.createElement('div'); d.className='card p-3'; d.innerHTML = `<div class="font-bold">${x.name}</div><div class="text-xs text-neutral-600">${fmtEUR(x.amount)} • ${x.status}</div>`; subvList.appendChild(d); }); }
+      if(donList){ donList.innerHTML = ''; dons.forEach(x=>{ const d = document.createElement('div'); d.className='card p-3'; d.innerHTML = `<div class="font-bold">${x.name}</div><div class="text-xs text-neutral-600">${fmtEUR(x.amount)} • ${x.status}</div>`; donList.appendChild(d); }); }
+      if(summary){
+        summary.innerHTML = '';
+        const sum = (arr, st)=> arr.filter(x=>x.status===st).reduce((a,b)=>a+b.amount,0);
+        [['Subventions demandées', sum(subv,'Demandée')],
+         ['Subventions acceptées', sum(subv,'Acceptée')],
+         ['Subventions reçues', sum(subv,'Reçue')],
+         ['Dons reçus', sum(dons,'Reçue')]].forEach(([label, val])=>{
+          const li = document.createElement('li'); li.textContent = `${label}: ${fmtEUR(val)}`; summary.appendChild(li);
+        });
+        renderBilans();
+      }
+    }
+    const bilanForm = el('#bilanForm');
+    if(bilanForm){
+      bilanForm.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        const year = el('#bilanYear').value.trim();
+        const file = el('#bilanFile').files[0];
+        if(!year || !file) return;
+        try{
+          const data = await readFileAsDataURL(file, 5*1024*1024);
+          store.state.bilans.push({ id: Date.now(), year, name:file.name, data });
+          store.save();
+          notify('Bilan publié');
+          e.target.reset();
+          renderBilans();
+        }catch(err){
+          notify('PDF trop grand (≤ 5 Mo)');
+        }
+      });
+    }
+    function renderBilans(){
+      const ul = el('#bilanList'); if(!ul) return; ul.innerHTML = '';
+      const list = [...store.state.bilans].sort((a,b)=> b.year.localeCompare(a.year));
+      list.forEach(b=>{
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = b.data; a.target = '_blank'; a.rel = 'noopener noreferrer';
+        a.className = 'text-indigo-700 underline';
+        a.textContent = `${b.year} — ${b.name}`;
+        li.appendChild(a);
+        ul.appendChild(li);
+      });
+    }
+
+    // CONTACT
+    const contactForm = el('#contactForm');
+    if(contactForm){
+      contactForm.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        notify('Message envoyé (démo)');
+        e.target.reset();
+      });
+    }
+    const openMailBtn = el('#openMail');
+    if(openMailBtn){
+      openMailBtn.addEventListener('click', ()=>{
+        const name = encodeURIComponent(el('#cName').value.trim());
+        const email = encodeURIComponent(el('#cEmail').value.trim());
+        const subject = encodeURIComponent(el('#cSubject').value.trim());
+        const body = encodeURIComponent(el('#cMsg').value.trim() + (email? `\n\n— ${decodeURIComponent(name)} (${decodeURIComponent(email)})`:''));
+        const to = 'contact@voixenex.org';
+        const url = `mailto:${to}?subject=${subject}&body=${body}`;
+        window.open(url, '_blank');
+      });
+    }
+
+    // INIT
+    function init(){
+      handleRoute();
+      renderServices();
+      refreshCartIcon();
+      renderCalendar();
+      renderNewsletter();
+      renderPosts();
+      renderTestimonials();
+      renderGallery();
+      renderHelps();
+      renderFinances();
+    }
+    // Open cart from anywhere via header
+    // Already bound above
+    init();
+    // Close cart with ESC
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeCart(); });
   </script>
-
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'983bc2336653b93b',t:'MTc1ODY0ODUwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
