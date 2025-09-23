@@ -25,6 +25,7 @@ img {
 }
 .logo img {
   height: 60px;
+  max-width: 100%;
 }
 .navbar ul {
   list-style: none;
@@ -64,6 +65,7 @@ img {
   width: 100%;
   height: 300px;
   overflow: hidden;
+  margin-bottom: 40px;
 }
 .banniere img {
   width: 100%;
@@ -184,3 +186,4 @@ input, textarea {
   margin-top: 0;
   color: #6A1B9A;
 }
+
