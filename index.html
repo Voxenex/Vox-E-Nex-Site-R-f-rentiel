@@ -309,22 +309,86 @@
     </section>
 
     <!-- PAGE: Pourquoi nous -->
-    <section id="page-pourquoi" class="page">
-      <div class="deco">
-        <svg class="w-full h-full" viewBox="0 0 800 400" preserveAspectRatio="none">
-          <g fill="#7A7CFF"><rect x="50" y="260" width="120" height="60" rx="18"/><rect x="650" y="40" width="100" height="60" rx="18"/><rect x="340" y="100" width="140" height="60" rx="18"/></g>
-        </svg>
+<section id="page-pourquoi" class="page">
+  <div class="deco">
+    <svg class="w-full h-full" viewBox="0 0 800 400" preserveAspectRatio="none">
+      <g fill="#7A7CFF">
+        <rect x="50" y="260" width="120" height="60" rx="18"/>
+        <rect x="650" y="40" width="100" height="60" rx="18"/>
+        <rect x="340" y="100" width="140" height="60" rx="18"/>
+      </g>
+    </svg>
+  </div>
+  <div class="container-w mx-auto px-5 section relative z-10">
+    <a data-goto="home" class="btn btn-ghost">⟵ Retour à l’accueil</a>
+    <h2 class="text-3xl md:text-4xl font-extrabold mt-6">Pourquoi nous choisir ?</h2>
+
+    <!-- Intro -->
+    <p class="mt-4 text-neutral-700 leading-relaxed">
+      Vox E Nex n’est pas seulement une association de karaoké : c’est une véritable communauté festive et inclusive. Chaque événement est pensé pour offrir une expérience unique, conviviale et professionnelle.
+    </p>
+
+    <!-- Cartes principales -->
+    <div class="grid md:grid-cols-3 gap-5 mt-6">
+      <div class="card p-6">
+        <div class="text-4xl">🌞</div>
+        <div class="font-extrabold mt-2">Chaleur & Joie</div>
+        <p class="text-neutral-700 mt-2">Une ambiance humaine et chaleureuse au cœur de tout.</p>
       </div>
-      <div class="container-w mx-auto px-5 section relative z-10">
-        <a data-goto="home" class="btn btn-ghost">⟵ Retour à l’accueil</a>
-        <h2 class="text-3xl md:text-4xl font-extrabold mt-6">Pourquoi nous choisir ?</h2>
-        <div class="grid md:grid-cols-3 gap-5 mt-6">
-          <div class="card p-6"><div class="text-4xl">🌞</div><div class="font-extrabold mt-2">Chaleur & Joie</div><p class="text-neutral-700 mt-2">Une ambiance humaine et chaleureuse au cœur de tout.</p></div>
-          <div class="card p-6"><div class="text-4xl">🧭</div><div class="font-extrabold mt-2">A à Z</div><p class="text-neutral-700 mt-2">Organisation complète, vous profitez, on s’occupe du reste.</p></div>
-          <div class="card p-6"><div class="text-4xl">🔎</div><div class="font-extrabold mt-2">Transparence</div><p class="text-neutral-700 mt-2">Budgets, subventions et bilans publiés clairement.</p></div>
-        </div>
+      <div class="card p-6">
+        <div class="text-4xl">🧭</div>
+        <div class="font-extrabold mt-2">A à Z</div>
+        <p class="text-neutral-700 mt-2">Organisation complète, vous profitez, on s’occupe du reste.</p>
       </div>
-    </section>
+      <div class="card p-6">
+        <div class="text-4xl">🔎</div>
+        <div class="font-extrabold mt-2">Transparence</div>
+        <p class="text-neutral-700 mt-2">Budgets, subventions et bilans publiés clairement.</p>
+      </div>
+    </div>
+
+    <!-- Valeurs -->
+    <div class="mt-10 space-y-6">
+      <div>
+        <h3 class="text-xl font-extrabold">🎶 Une expertise reconnue</h3>
+        <p class="mt-2 text-neutral-700 leading-relaxed">
+          Avec une équipe passionnée et expérimentée, nous garantissons des animations de qualité, adaptées à tous les publics et à toutes les occasions.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-xl font-extrabold">🌟 Une ambiance conviviale</h3>
+        <p class="mt-2 text-neutral-700 leading-relaxed">
+          Nos soirées sont conçues pour rassembler, créer du lien et favoriser la participation de chacun, dans un esprit de partage et de bonne humeur.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-xl font-extrabold">📚 Une organisation transparente</h3>
+        <p class="mt-2 text-neutral-700 leading-relaxed">
+          Chaque prestation est documentée et structurée, afin d’assurer une gestion claire, reproductible et accessible à tous nos partenaires et bénévoles.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-xl font-extrabold">🌍 Un ancrage local fort</h3>
+        <p class="mt-2 text-neutral-700 leading-relaxed">
+          Implantés à Toulouges et actifs dans tout le Roussillon, nous valorisons la culture catalane et collaborons avec les acteurs locaux pour dynamiser la vie associative et culturelle.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-xl font-extrabold">🤝 Une ouverture à tous</h3>
+        <p class="mt-2 text-neutral-700 leading-relaxed">
+          Que vous soyez particulier, association, bénévole ou partenaire, Vox E Nex vous accueille et construit avec vous des événements sur mesure.
+        </p>
+      </div>
+    </div>
+
+    <hr class="separator mt-10">
+  </div>
+</section>
+
 
     <!-- PAGE: Équipe -->
     <section id="page-equipe" class="page">
@@ -1288,5 +1352,6 @@
   </script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'983bc2336653b93b',t:'MTc1ODY0ODUwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+
 
 
