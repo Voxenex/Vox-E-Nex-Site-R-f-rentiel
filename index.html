@@ -577,6 +577,13 @@
               <input type="email" id="nlEmail" class="field flex-1" placeholder="Votre email" required>
               <button class="btn btn-primary">S’abonner</button>
             </form>
+            <form id="joinForm" class="card p-5">
+  <h3 class="font-extrabold text-xl">Proposer une collaboration</h3>
+  <input type="text" placeholder="Nom / Structure" class="field w-full mt-2" required>
+  <input type="email" placeholder="Email" class="field w-full mt-2" required>
+  <textarea placeholder="Proposition / rôle souhaité" class="field w-full mt-2" rows="4" required></textarea>
+  <button class="btn btn-joy w-full mt-3">Envoyer</button>
+</form>
             <h4 class="font-bold mt-6">Derniers abonnés</h4>
             <ul id="nlList" class="mt-2 text-sm space-y-1"></ul>
             <a id="newsletter" class="hidden" aria-hidden="true"></a>
@@ -758,6 +765,17 @@
     <h2 class="text-3xl md:text-4xl font-extrabold mt-6">Partenaires & Prestataires</h2>
     <p class="mt-2 text-neutral-700">Nous valorisons chaque collaboration avec transparence et reconnaissance.</p>
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6" id="collabGrid"></div>
+  </div>
+</section>
+
+    <!-- PAGE: Espace Collaboratif -->
+<section id="page-espace-collaboratif" class="page hidden">
+  <div class="container-w mx-auto px-5 section relative z-10">
+    <h2 class="text-3xl font-extrabold mt-6">Espace Collaboratif</h2>
+    <p class="mt-2 text-neutral-700">Accès réservé aux membres actifs. Coordination, documents, retours et suivi.</p>
+    <div class="mt-6">
+      <!-- contenu dynamique : planning, docs, retours -->
+    </div>
   </div>
 </section>
 
@@ -1296,6 +1314,24 @@ function renderCollaborateursPublic() {
   `).join("");
 }
 
+    // RESTRICTION D'ACCES
+    const userRole = store.state.user?.role; // exemple : "visiteur", "bénévole", "partenaire"
+if (["bénévole", "partenaire"].includes(userRole)) {
+  document.getElementById("page-espace-collaboratif").classList.remove("hidden");
+}
+    collaborateurs: {
+  partenaires: [
+    {name: "Théâtre de la Complicité", logo: "logo_complicite.png", lieu: "Perpignan", date: "2025-09-01", role: "Accueil des soirées mensuelles"}
+  ],
+  prestataires: [
+    {name: "DJ Catalan", logo: "logo_dj.png", lieu: "Toulouges", date: "2025-07-15", role: "Animation musicale"}
+  ]
+},
+user: {
+  role: "visiteur" // ou "bénévole", "partenaire"
+}
+
+    
     // INIT
     function init(){
       handleRoute();
@@ -1317,6 +1353,7 @@ function renderCollaborateursPublic() {
   </script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'983bc2336653b93b',t:'MTc1ODY0ODUwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+
 
 
 
