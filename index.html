@@ -711,7 +711,7 @@
             <ul class="mt-3 text-sm space-y-1">
               <li>📍 Adresse: 20 Rue Boileau, 66350 Toulouges.</li>
               <li>☎️ Téléphone: +33 6.16.40.00.59/ 6.41.87.44.38 (urgent)</li>
-              <li>✉️ Email: voxenex@outlook.fr </li>
+              <li>✉️ Email: voxenex@outlook.com </li>
             </ul>
             <div class="mt-4">
               <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" class="tag bg-blue-100 text-blue-800">Facebook</a>
@@ -811,8 +811,6 @@
         providers: [],
         newsletter: [],
         members: [],
-        finances: { subventions: [], dons: [] },
-        bilans: []
       },
       load(){
         try{
@@ -1251,7 +1249,7 @@ if (isAdmin) {
         const email = encodeURIComponent(el('#cEmail').value.trim());
         const subject = encodeURIComponent(el('#cSubject').value.trim());
         const body = encodeURIComponent(el('#cMsg').value.trim() + (email? `\n\n— ${decodeURIComponent(name)} (${decodeURIComponent(email)})`:''));
-        const to = 'contact@voixenex.org';
+        const to = 'Voxenex@outlook.com';
         const url = `mailto:${to}?subject=${subject}&body=${body}`;
         window.open(url, '_blank');
       });
@@ -1278,6 +1276,7 @@ if (isAdmin) {
   </script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'983bc2336653b93b',t:'MTc1ODY0ODUwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+
 
 
 
