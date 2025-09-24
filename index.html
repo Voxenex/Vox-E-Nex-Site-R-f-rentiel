@@ -751,6 +751,16 @@
         </div>
       </div>
     </section>
+    
+    <!-- PAGE: Partenaires & Prestataires -->
+<section id="page-collaborateurs" class="page">
+  <div class="container-w mx-auto px-5 section relative z-10">
+    <h2 class="text-3xl md:text-4xl font-extrabold mt-6">Partenaires & Prestataires</h2>
+    <p class="mt-2 text-neutral-700">Nous valorisons chaque collaboration avec transparence et reconnaissance.</p>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6" id="collabGrid"></div>
+  </div>
+</section>
+
   </main>
 
   <!-- Panier / Devis & Paiement (Drawer) -->
@@ -1267,6 +1277,24 @@ if (isAdmin) {
         window.open(url, '_blank');
       });
     }
+  
+    // PARTENAIRE & PRESTATAIRE  
+function renderCollaborateursPublic() {
+  const all = [...store.state.collaborateurs.partenaires, ...store.state.collaborateurs.prestataires];
+  const container = document.getElementById("collabGrid");
+
+  container.innerHTML = all.map(item => `
+    <div class="card p-4 flex gap-3 items-center">
+      <img src="assets/logos/${item.logo}" alt="${item.name}" class="w-12 h-12 object-contain rounded-full">
+      <div>
+        <div class="font-bold">${item.name}</div>
+        <div class="text-sm text-neutral-600">${item.lieu}</div>
+        <div class="text-xs text-neutral-500">Depuis le ${new Date(item.date).toLocaleDateString()}</div>
+        <div class="text-xs text-neutral-700 italic">${item.role}</div>
+      </div>
+    </div>
+  `).join("");
+}
 
     // INIT
     function init(){
@@ -1289,6 +1317,7 @@ if (isAdmin) {
   </script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'983bc2336653b93b',t:'MTc1ODY0ODUwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+
 
 
 
