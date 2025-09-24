@@ -670,70 +670,7 @@
       </div>
     </section>
 
-    <!-- PAGE: Bénévolat & Prestataires -->
-    <section id="page-benevolat" class="page">
-      <div class="deco">
-        <svg class="w-full h-full" viewBox="0 0 800 400">
-          <g fill="#6BE585"><text x="60" y="110" font-size="60">🤝 🧰 ⏰</text><rect x="640" y="260" width="80" height="60" rx="12"/></g>
-        </svg>
-      </div>
-      <div class="container-w mx-auto px-5 section relative z-10">
-        <a data-goto="home" class="btn btn-ghost">⟵ Accueil</a>
-        <div class="grid lg:grid-cols-2 gap-6 mt-6">
-          <form id="helpForm" class="card p-5">
-            <h3 class="font-extrabold text-xl">Je propose mon aide</h3>
-            <div class="grid md:grid-cols-2 gap-3 mt-3">
-              <div><label class="text-sm font-bold">Nom</label><input id="hName" class="field w-full" required></div>
-              <div><label class="text-sm font-bold">Email</label><input id="hEmail" type="email" class="field w-full" required></div>
-            </div>
-            <div class="mt-3"><label class="text-sm font-bold">Je suis</label><select id="hType" class="field w-full"><option>Bénévole</option><option>Prestataire</option></select></div>
-            <div class="mt-3"><label class="text-sm font-bold">Compétences</label><input id="hSkills" class="field w-full" placeholder="Ex: Sono, DJ, Photo, Service…"></div>
-            <div class="mt-3"><label class="text-sm font-bold">Disponibilités</label><input id="hAvail" class="field w-full" placeholder="Ex: soirs & week-ends"></div>
-            <button class="btn btn-primary w-full mt-3">Envoyer</button>
-          </form>
-          <div class="card p-5">
-            <h3 class="font-extrabold text-xl">Candidatures</h3>
-            <div id="helpList" class="mt-3 space-y-3 text-sm"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Bloc réservé à l’administration -->
-<div id="adminOnly" class="hidden">
-  <form id="fundForm" class="card p-5">
-    <h3 class="font-extrabold text-xl">Ajouter une entrée</h3>
-    <div class="mt-3">
-      <label class="text-sm font-bold">Type</label>
-      <select id="fType" class="field w-full">
-        <option>Subvention</option>
-        <option>Don</option>
-      </select>
-    </div>
-    <div class="mt-3">
-      <label class="text-sm font-bold">Intitulé / Source</label>
-      <input id="fName" class="field w-full" placeholder="Ville, Région, Entreprise…" required>
-    </div>
-    <div class="grid md:grid-cols-2 gap-3 mt-3">
-      <div>
-        <label class="text-sm font-bold">Montant (€)</label>
-        <input id="fAmount" type="number" class="field w-full" min="0" step="1" required>
-      </div>
-      <div>
-        <label class="text-sm font-bold">Statut</label>
-        <select id="fStatus" class="field w-full">
-          <option>Demandée</option>
-          <option>Acceptée</option>
-          <option>Reçue</option>
-        </select>
-      </div>
-    </div>
-    <button class="btn btn-joy w-full mt-3">Ajouter</button>
-  </form>
-</div>
-
-
-    <!-- PAGE: Mentions légales -->
+   <!-- PAGE: Mentions légales -->
     <section id="page-mentions" class="page">
       <div class="deco">
         <svg class="w-full h-full" viewBox="0 0 800 400"><g fill="#FF6B6B"><text x="60" y="110" font-size="60">⚖️ 🔐 🎼</text></g></svg>
@@ -1411,6 +1348,7 @@ if (isAdmin) {
   </script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'983bc2336653b93b',t:'MTc1ODY0ODUwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+
 
 
 
